@@ -1,11 +1,23 @@
 ---
-title: "R_Intro_BERD_2026_04"
+title: "Getting Started in R and RStudio"
+institute: "OHSU OCTRI-BERD"
+author: "Jessica Minnier, Meike Niederhausen"
+date: "04/30/2026"
 ---
 
-This is a Quarto website.
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
 
-```{r}
-1 + 1
-```
+**Welcome to the BERD workshop *Getting Started in R and RStudio*!**
+
+-   Part 1: Thursday, April 30, 2:00 to 3:30 p.m.
+-   Part 2 : Monday, May 11 , 2:00 to 3:30 p.m.
+
+In this two -part interactive workshop, we will introduce the freely available statistical software programs R and RStudio to attendees with no prior experience. We will cover how to use RStudio to write and run code, introduce data structure types, and demonstrate commands for working with data: loading, viewing, summarizing, plotting, cleaning, and saving. You will learn basic R data wrangling and plotting principles, and how to
+use them to create high-quality reproducible documents to present your work.
+
+
+No prior experience in R or RStudio is necessary. Installation materials will be circulated ahead of Part 1. We encourage you to bring a laptop with R and RStudio installed. For installation assistance, please join at 1:30 p.m. (30 minutes early) to Part 1 on April 30.
+
+-   [R & RStudio installation instructions](https://ohsu-octri-berd.github.io/R_RStudio_Installation/){target="_blank"}
+
+-   Workshop [slides](slides_R_berd_2026.qmd){target="_blank"}

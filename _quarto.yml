@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "R_Intro_BERD_2026_04"
+  title: "Getting Started in R and RStudio"
   navbar:
     left:
       - href: index.qmd

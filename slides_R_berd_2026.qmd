@@ -1,0 +1,2285 @@
+---
+title: "Getting Started in R and Rstudio"
+subtitle: "Parts 1 & 2"
+institute: "OHSU OCTRI-BERD"
+author: "Jessica Minnier, Meike Niederhausen"
+date: "04/30/2026"
+format: 
+  revealjs:
+      incremental: false
+      scrollable: true
+      chalkboard: true
+      theme: [sky_modified_smaller_font.scss]
+      width:  1100 #default 1050
+      height: 825  #default 700
+      slide-number: true
+      html-math-method: mathjax
+  # html:
+  #   link-external-newwindow: true
+  #   toc: true
+execute:
+  echo: true
+  freeze: auto  # re-render only when source changes
+# editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+```
+
+```{r}
+#| eval: false
+#| include: false
+
+# only run this if you have not yet installed these packages
+# it may ask you if you want to restart R, you can say Yes then No the rest of the time, but it also probably doesn't matter what you click if you just turned on Rstudio
+
+install.packages("tidyverse")
+install.packages("janitor")
+install.packages("gt")
+install.packages("gtsummary")
+install.packages("naniar")
+install.packages("rstatix") # if you have issues with this, comment out using #
+install.packages("writexl")
+
+```
+
+```{r}
+#| include: false
+#| message: false
+#| warning: false
+
+# Load packages, this code must be run every time
+library(tidyverse)
+library(gt)
+library(gtsummary)
+library(rstatix) # if you have issues with this, comment out using #
+library(readxl)
+library(janitor)
+library(naniar)
+library(writexl)
+
+# set ggplot theme for slides 
+theme_set(theme_bw(base_size = 22))
+```
+
+# Load files for today's workshop
+
+1.  Open Google Doc <https://bit.ly/berd_r_intro_2024_doc>
+
+    -   Use this to post questions!
+    -   This has all the links in it
+
+2.  Download folder of files using link <https://bit.ly/berd_intro_2024_files>
+
+    -   **Do you have a PC? Need to right click .zip file and select EXTRACT ALL**
+
+    -   Do you have a Mac? Just double click .zip file and it will open
+
+    -   These files are hosted on github <https://github.com/OHSU-OCTRI-BERD/R_Intro_2024_09>
+
+3.  Open the slides file (html) in a web browser: `slides_R_berd_2024.html` or use the link <https://bit.ly/berd_intro_2024_slides>
+
+4.  [Open RStudio by double-clicking on the file]{style="color:darkorange"} `berd_r_intro_2024_09.Rproj`
+
+## Overview
+
+::: columns
+::: {.column width="50%"}
+### Part 1: 09/19/2024
+
+-   Intro to R & RStudio
+-   Quarto documents & code chunks
+-   R packages
+-   Data: loading, viewing
+-   Summarizing data
+    -   Quantitative
+    -   Categorical
+-   Data visualizations
+    -   Quantitative: histograms, boxplots, scatterplots
+    -   Categorical: barplots
+-   Missing data summary
+:::
+
+::: {.column width="50%"}
+### Part 2: 10/03/2024
+
+-   Data wrangling
+    -   Sorting data
+    -   Subsetting data (rows, columns)
+    -   Creating new variables in a dataset
+    -   Factor level variables
+-   Some more data viz (stratifying figures)
+-   Replacing missing values with another value
+-   Resources
+:::
+:::
+
+# Introduction to R
+
+![[Artwork by \@allison_horst](https://allisonhorst.com/everything-else)](image/horst_welcome_R.png){fig-align="center"}
+
+## What is R?
+
+::: columns
+::: {.column width="70%"}
+-   A programming language
+-   Focus on statistical modeling and data analysis
+    -   import data, manipulate data, run statistics, make plots
+-   Useful for data science
+-   Great visualizations
+-   Also useful for most anything else you'd want to tell a computer to do
+-   Interfaces with other languages i.e. python, C++, bash
+:::
+
+::: {.column width="30%"}
+![](image/R_logo.png)
+:::
+:::
+
+For the history and details: [Wikipedia](https://bit.ly/1efFmaY)
+
+-   an interpreted language (run it through a command line)
+-   procedural programming with functions
+-   Why "R"?? Scheme inspired S (invented at Bell Labs in 1976) which inspired R since 1st letters of original authors (**free and open source!** in 2000)
+
+## What is RStudio?
+
+::: columns
+::: {.column width="50%"}
+R is a programming language
+:::
+
+::: {.column width="50%"}
+RStudio is an integrated development environment (IDE) = an interface to use R (with perks!)
+:::
+:::
+
+![[Modern Dive](https://moderndive.com/1-getting-started.html#r-rstudio)](image/r_vs_rstudio_1.png){fig-align="center"}
+
+## Open RStudio on your computer (not R!)
+
+![[Modern Dive](https://moderndive.com/1-getting-started.html#using-r-via-rstudio)](image/01_md_r.png){fig-align="center"}
+
+## RStudio anatomy
+
+![[Emma Rand](http://www-users.york.ac.uk/~er13/17C%20-%202018/pracs/01IntroductionToModuleAndRStudio.html#what_are_r_and_rstudio)](image/RStudio_Anatomy.svg){fig-align="center"}
+
+Read more about RStudio's layout in Section 3.4 of "[Getting Used to R, RStudio, and R Markdown](https://ismayc.github.io/rbasics-book/3-rstudiobasics.html#rstudio-layout)" (Ismay and Kennedy 2021)
+
+# Creating reproducible reports with Quarto
+
+![[Artwork by \@allison_horst](https://allisonhorst.com/r-packages-functions)](image/horst_rmarkdown_wizards_quarto.png){fig-align="center"}
+
+## Quarto = `.qmd` file = Code + text $\to$ html
+
+`.qmd` files contain code + markdown syntax which can be "rendered" to other formats (html, pdf, Word, etc)
+
+::: columns
+::: {.column width="50%"}
+.qmd file ![](image/01_qmd_screenshot.png){fig-align="center"}
+:::
+
+::: {.column width="50%"}
+html output\
+![](image/default_quarto_html.png){fig-align="center"}
+:::
+:::
+
+# Basic Quarto example
+
+![[Artwork from "Hello, Quarto" keynote by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio Conference 2022. Illustrated by Allison Horst.](https://allisonhorst.com/cetinkaya-rundel-lowndes-quarto-keynote)](image/horst_quarto_moon_penguins.png){fig-align="center"}
+
+## 1. Create a Quarto file (`.qmd`)
+
+**Two options:**
+
+1.  click on File $\rightarrow$ New File $\rightarrow$ Quarto Document...$\rightarrow$ OK,
+2.  or in upper left corner of RStudio click on ![](image/green_plus_create_file.png){width="70"} $\rightarrow$ ![](image/select_quarto_option.png){width="250"}
+
+::: columns
+::: {.column width="50%"}
+**Pop-up window selections:**
+
+-   Enter a title and your name
+-   Select `HTML` output format (default)
+-   Engine: select `Knitr`
+-   Editor: Select `Use visual markdown editor`
+-   Click `Create`
+:::
+
+::: {.column width="50%"}
+![](image/01_qmd_screenshot_popup.png)
+:::
+:::
+
+## 2. Create a Quarto file (`.qmd`)
+
+-   After clicking on `Create`, you should then see the following in your editor window:
+
+![](image/01_qmd_screenshot.png){fig-align="center"}
+
+## 3. Save the Quarto file (`.qmd`)
+
+-   **Save the file** by
+    -   selecting `File -> Save`,
+    -   or clicking on ![](image/01_Script_Save.png){width="33" height="24"} (towards the left above the scripting window),
+    -   or keyboard shortcut
+        -   PC: *Ctrl + s*
+        -   Mac: *Command + s*
+-   You will need to specify
+    -   a **filename** to save the file as
+        -   ALWAYS use **.qmd** as the filename extension for Quarto files
+    -   the **folder** to save the file in
+
+## 4. Create (render) html file
+
+We create the html file by **rendering** the .qmd file.
+
+Two options:
+
+1.  click on the Render icon ![](image/render_icon.png) at the top of the editor window,
+2.  or use keyboard shortcuts
+    -   Mac: *Command+Shift+K*
+    -   PC: *Ctrl+Shift+K*
+
+-   A new window will open with the html output.
+-   You will now see both .qmd and .html files in the folder where you saved the .qmd file.
+
+::: callout-note
+-   The template .qmd file that RStudio creates will render to an html file by default.
+-   The output format can be changed to create a Word doc, pdf, slides, etc.
+:::
+
+## .qmd file vs. its html output
+
+::: columns
+::: {.column width="50%"}
+.qmd file ![](image/01_qmd_screenshot.png){fig-align="center"}
+:::
+
+::: {.column width="50%"}
+html output\
+![](image/default_quarto_html.png){fig-align="center"}
+:::
+:::
+
+# 3 types of Quarto content
+
+1.  [*Code chunks*]{style="color:darkorange"}
+2.  Text, lists, images, tables, links (covered in Quarto workshop)
+3.  YAML metadata (covered in Quarto workshop)
+
+![[Illustration by Alison Hill and Allison Horst, for RStudio.](https://allisonhorst.com/horst-hill-collaborations)](image/horst_hedgehog_text_code.png){fig-align="center"}
+
+## Code chunks
+
+::: columns
+::: {.column width="50%"}
+.qmd file ![](image/01_qmd_screenshot.png){fig-align="center"}
+:::
+
+::: {.column width="50%"}
+html output\
+![](image/default_quarto_html.png){fig-align="center"}
+:::
+:::
+
+## What does a code chunk look like?
+
+An empty code chunk looks like this:
+
+`Visual editor`
+
+![](image/01_qmd_chunk_empty_visual.png)
+
+`Source editor`
+
+![](image/01_qmd_chunk_empty_source.png)
+
+::: callout-important
+Note that a code chunks start with ```` ```{r} ```` and ends with ```` ``` ````. Make sure there is no space before ```` ``` ````.
+:::
+
+## Enter and run code (1/2)
+
+-   **Type R code** inside code chunks
+-   **Select code** you want to run, by
+    -   placing the cursor in the line of code you want to run,
+    -   ***or*** highlighting the code you want to run
+
+::: columns
+::: {.column width="50%"}
+-   **Run selected code** by
+    -   clicking on the ![](image/01_Script_Run.png) button in the top right corner of the scripting window and choosing `Run Selected Line(s)`,
+    -   or typing one of the following key combinations:
+
+|     |                      |
+|-----|----------------------|
+| Mac | **ctrl + return**    |
+| PC  | **command + return** |
+
+-   *Where does the output appear?*
+:::
+
+::: {.column width="50%"}
+![](image/01_qmd_coding1a.png){fig-align="center"}
+:::
+:::
+
+## Enter and run code (2/2)
+
+::: {style="font-size: 80%;"}
+-   **Run all code** in a chunk by
+    -   by clicking the play button in the top right corner of the chunk
+-   The code output appears below the code chunk
+:::
+
+![](image/01_qmd_coding2.png){fig-align="center"}
+
+::: callout-note
+-   The output should also appear in the Console.
+-   Settings can be changed so that the output appears only in the Console and not below the code chunk:
+    -   Select {{< fa solid gear >}} (to right of Render button) and then *Chunk Output in Console*.
+:::
+
+## Create a code chunk
+
+3 options to create a code chunk
+
+1.  Click on ![](image/code_chunk_insert_icon.png) at top right of the editor window, or
+
+2.  [**Keyboard shortcut**]{style="color:darkorange"}
+
+|     |                        |
+|-----|------------------------|
+| Mac | *Command + Option + I* |
+| PC  | *Ctrl + Alt + I*       |
+
+3.  `Visual editor`: Select `Insert` -\> `Executable Cell` -\> `R`
+
+![](image/code_chunk_insert_visual.png)
+
+# R Packages: install & load
+
+![](image/tidyverse_celestial.jpg){fig-align="center"}
+
+## What are R Packages?
+
+A good analogy for R packages is that they\
+are like apps you can download onto a mobile phone:
+
+![[ModernDive Figure 1.4](https://moderndive.com/1-getting-started.html#packages)](image/R_vs_R_packages.png){fig-align="center"}
+
+## Installing packages
+
+-   Packages contain additional functions and data
+
+Two options to install packages:
+
+1.  `install.packages()` *or*
+2.  The "Packages" tab in Files/Plots/Packages/Help/Viewer window
+
+```{r}
+#| eval: false
+
+install.packages("janitor")   # only do this ONCE, use quotes
+```
+
+::: columns
+::: {.column width="50%"}
+-   **Only install packages once** *(unless you want to update them)*
+-   Installed from [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/) = package mothership
+:::
+
+::: {.column width="50%"}
+![](image/screenshot_packages_window.png){fig-align="center"}
+:::
+:::
+
+## Packages used in this workshop
+
+-   **tidyverse**: collection of many commonly used packages, including: readr, forcats, ggplot2 (see list [here](https://www.tidyverse.org/packages/))
+
+-   For loading datasets:
+
+    -   readr (a part of tidyverse)
+    -   **readxl**
+
+-   For summarizing data
+
+    -   **janitor**
+    -   **gt**
+    -   **rstatix**
+    -   **gtsummary**
+    -   **naniar**
+    -   ggplot2 (for graphing, loaded with tidyverse)
+
+-   for wrangling data
+
+    -   dplyr, tidyr (loaded with tidyverse)
+
+## Install packages used in this workshop
+
+-   Run the code below to install packages:
+
+```{r}
+#| eval: FALSE
+install.packages("tidyverse")  # this takes a while to install
+install.packages("writexl")
+install.packages("rstatix") 
+install.packages("janitor")
+install.packages("naniar")
+install.packages("gt")
+install.packages("gtsummary")
+```
+
+-   It is **VERY IMPORTANT** that you install these packages in order to run the code for the workshop!
+
+## Load packages with `library()` command
+
+-   Use the `library()` command to load each required package.
+-   Packages need to be loaded *every* time you open Rstudio.
+    -   **The code to load packages MUST be in your qmd file.**
+    -   *Tip: at the top of your qmd file, create a chunk that loads all of the R packages you want to use in that file.*
+
+```{r}
+library(janitor)    # run this every time you open Rstudio
+```
+
+::: columns
+::: {.column width="50%"}
+-   Check to see whether a package has been loaded:
+    -   Go to Packages tab
+    -   If box to left of package name is checked off, then it's loaded
+:::
+
+::: {.column width="50%"}
+![](image/screenshot_packages_window.png){fig-align="center"}
+:::
+:::
+
+## Load packages used in this workshop
+
+-   Run the code below in your R session
+
+```{r}
+library(tidyverse)
+library(writexl)
+library(rstatix)
+library(janitor)
+library(naniar)
+library(gt)
+library(gtsummary)
+library(readxl)  # part of tidyverse, but not the tidyverse core
+```
+
+::: callout-note
+-   Note that the package names do not need quotes around them when using the `library()` function, but they are required when using the `install.packages()` function.
+:::
+
+# Data basics in R
+
+![[Artwork by \@allison_horst](https://allisonhorst.com/r-packages-functions)](image/horst_data_cowboy.png){fig-align="center"}
+
+## Dataset example (toy data)
+
+ 
+
+::: {style="font-size: 110%;"}
+-   [**Use Excel to open the dataset `toy_data.xlsx` that is located in the data folder.**]{style="color:darkorange"}
+
+-   Terminology
+
+    -   Rows are usually **observations** (i.e. a person's measurements)
+    -   Columns are usually **variables** or **measures**
+
+-   How many observations are in this dataset?
+
+-   What are the variable types in this dataset?
+:::
+
+## Import data into R
+
+ 
+
+::: {style="font-size: 110%;"}
+-   We can import data from many file types, including .csv, .txt., .xlsx, plus SAS or Stata files
+
+-   Once imported, R typically stores data as [**data frames**]{style="color:darkorange"}, or [**tibbles**]{style="color:darkorange"} if using the `tidyverse` package.
+
+    -   For our purposes, these are essentially the same, and we will tend to use the terms interchangeably.
+    -   These are examples of what we call [**object types**]{style="color:darkorange"} in R.
+:::
+
+## Load data from an .xlsx (Excel) file: **point & click option**
+
+**SAVE THE CODE after using the point & click option**
+
+::: columns
+::: {.column width="40%"}
+-   In RStudio's Files window, open the `data` folder and
+    -   then click on the dataset `toy_data.xlsx`.
+-   Select the `Import Dataset...` option,
+    -   Import Options: Type in `NA` in the "NA:" box, and
+    -   then click on the `Import` button on the bottom right of the pop-up window.
+:::
+
+::: {.column width="60%"}
+![](image/load_data_point_click.png){fig-align="center"} ![](image/load_data_point_click_NA.png){fig-align="center"}
+:::
+
+-   **Copy the code from the console used to load the file into your script** (omitting the + sign):
+
+```{r}
+toy_data <- read_excel("data/toy_data.xlsx", na = "NA")
+```
+:::
+
+## Load data from an .xlsx (Excel) file: **code option**
+
+-   The point and click option used the `read_excel` command from the `readxl` package to load the xlsx file.
+-   If comfortable with coding and the data, we can skip the point and click and directly write the code ourselves.
+-   When loading the dataset, we need to specify where the xlsx file is located, which in this case is in the folder called `data`.
+-   No matter which option we use, the [**code to load the data MUST be in your qmd**]{style="color:darkorange"}.
+
+```{r}
+# library(readxl) # commented out since loaded above already
+toy_data <- read_excel("data/toy_data.xlsx", na = "NA")
+```
+
+-   This code assigns the output of the `read_excel()` function (data) into an object named `toy_data`
+-   The [`<-` is the assignment operator]{style="color:green"}
+-   After loading, the name of the dataset object `toy_data` will be in your Environment tab
+-   To learn more about loading in Excel files, read the readxl intro vignette: <https://readxl.tidyverse.org/>
+-   Also check out the readxl cheatsheet ([this will download a pdf](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-import.pdf)).
+
+## View the `toy_data` dataset
+
+::: columns
+::: {.column width="50%"}
+-   Run the `View` command below within RStudio.
+
+```{r}
+#| eval: FALSE
+View(toy_data)
+```
+:::
+
+::: {.column width="50%"}
+-   A new tab in the scripting window will appear with the `toy_data` dataset.
+-   Note that the code chunk in the qmd file specifies `#| eval: FALSE` so that this code is not run while rendering the qmd file.
+:::
+:::
+
+![](image/View_toy_data.png){fig-align="center"}
+
+## What are the variable "types"?
+
+ 
+
+| R variable type  | Description                                          |
+|------------------|------------------------------------------------------|
+| `dbl`: double    | numbers; also `num` or `int` for numbers or integers |
+| `chr`: character | text, "strings"                                      |
+| `fct`: factor    | categorical variables stored with levels (groups)    |
+| `lgl`: logical   | boolean (TRUE, FALSE)                                |
+
+ 
+
+```{r}
+glimpse(toy_data)
+```
+
+## Getting to know the dataset
+
+### How many rows and columns?
+
+```{r}
+# dim is for dimensions
+# Output: # of rows, # of columns
+dim(toy_data)   
+
+nrow(toy_data)
+
+ncol(toy_data)
+```
+
+### What are the variable names?
+
+```{r}
+names(toy_data)
+```
+
+# The Youth Risk Behavior Surveillance System (YRBSS)
+
+Data from the CDC's [Youth Risk Behavior Surveillance System (YRBSS)](https://www.cdc.gov/healthyyouth/data/yrbs/index.htm)
+
+-   complex survey data
+-   national school-based survey
+    -   conducted by CDC and state, territorial, and local education and health agencies and tribal governments
+-   monitors six categories of health-related behaviors
+    -   that contribute to the leading causes of death and disability among youth and adults
+    -   including alcohol & drug use, unhealthy & dangerous behaviors, sexuality, and physical activity
+    -   see [Questionnaires](https://www.cdc.gov/healthyyouth/data/yrbs/questionnaires.htm)
+-   the data in `yrbss_demo.xlsx` are a subset of data in the R package [`yrbss`](https://github.com/hadley/yrbss), which includes YRBSS from 1991-2013
+
+# Practice time! (part 1)
+
+Use R code to answer the following questions.
+
+1.  Open the Excel file `yrbss_demo.xlsx` in the *data* *folder* to familiarize yourself with it.
+2.  Load the dataset `yrbss_demo.xlsx`. Make sure the name of the loaded data is `yrbss_data`.
+3.  What are the column names?
+4.  How many rows and columns are in `yrbss_data`?
+5.  Which variables are numeric (quantitative)?
+6.  Which variables are character?
+
+# Load the YRBSS data
+
+-   Open the Excel file `yrbss_demo.xlsx` in the *data* *folder* to familiarize yourself with it.
+-   This is a larger version of the toy data above, but it is still a subset of the full data.
+
+```{r}
+# library(readxl)
+# note we are saving the data from the Excel file in our environment 
+# with the object name yrbss_data
+yrbss_data <- read_excel("data/yrbss_demo.xlsx")
+```
+
+First look at the data:
+
+```{r}
+glimpse(yrbss_data)
+```
+
+-   After loading the dataset, you will see `yrbss_data` in the Data list of the Environment window.
+
+## View the `YRBSS` dataset
+
+-   Run the `View` command below within RStudio.
+    -   A new tab in the scripting window will appear with the `yrbss_data` dataset.
+-   Note that the code chunk specifies `#| eval: FALSE` so that this code is not run while rendering the .qmd file.
+
+```{r}
+#| eval: FALSE
+
+View(yrbss_data)
+```
+
+First 20 rows shown below:
+
+![](image/View_yrbss_data.png){fig-align="center"}
+
+# Summarizing data and `%>%`
+
+-   Often we want to summarize columns of data
+-   Quantitative data and categorical/text data will be summarized differently
+-   We also introduce the [pipe symbol]{style="color:darkorange"} `%>%`, which is used to string together commands
+
+The [pipe is read "and then"]{style="color:darkorange"} and tells R the next function will be applied to the data on the left side of the pipe:
+
+```{r}
+yrbss_data %>%
+  head() # shows top rows
+```
+
+# Summarizing quantitative data
+
+-   The **`rstatix` package** has a useful function called `get_summary_stats()` for quick statistics of quantitative data
+
+```{r}
+# library(rstatix)
+
+yrbss_data %>% 
+  get_summary_stats(
+    bmi, stweight,
+    type = "common"
+    ) 
+```
+
+-   The `type` options are
+    -   `type = c("full", "common", "robust", "five_number", "mean_sd", "mean_se", "mean_ci", "median_iqr", "median_mad", "quantile", "mean", "median", "min", "max")`
+
+## Stratified summaries (and more on `%>%`)
+
+-   Now let's **summarize the BMI and weight variables by a strata subgroup**.
+-   We do this with the `group_by()` function
+-   Notice that we now have two `%>%`:
+    -   `data %>% group_by(...) %>% get_summary_stats(...)`
+    -   With the pipe symbol `%>%` we can **string together many commands** in the order we want them applied. Example:
+        -   first tell R what dataset to use,
+
+        -   then have R group (stratify) the data by `sex`,
+
+        -   and then calculate summary statistics
+
+```{r}
+yrbss_data %>% 
+  group_by(sex) %>%
+  get_summary_stats(
+    bmi, stweight,
+    type = "common"
+    )
+```
+
+## Stratify by 2 variables
+
+-   We can specify more than one variable within `group_by()` to stratify the summaries by more variables
+
+```{r}
+yrbss_data %>% 
+  group_by(sex, grade) %>%
+  get_summary_stats(
+    bmi, stweight,
+    type = "common"
+    )
+```
+
+## Prettier table of output
+
+-   Below we add on `gt()` at the end to make the table prettier.
+    -   Make sure to check this out in the html output.
+-   The `gt()` command is from the `gt` [package](https://gt.rstudio.com/)
+
+```{r}
+yrbss_data %>% 
+  group_by(sex, grade) %>%
+  get_summary_stats(
+    bmi, stweight,
+    type = "common"
+    ) %>%
+  gt()
+```
+
+## Advanced examples using `summarize` function
+
+ 
+
+Below are links to data summary examples in our previous OCTRI-BERD workshop on *Introduction to R and RStudio for Exploratory Data Analysis: Part 2* using the function `summarize()`:
+
+-   [Summarize examples: Slides 6 - 12](https://jminnier-berd-r-courses.netlify.app/01-intro-r-eda/01_intro_r_eda_part2.html#6)
+-   All slides:
+    -   html slides: [bit.ly/berd_intro_part2](http://bit.ly/berd_intro_part2)
+    -   pdf slides: [bit.ly/berd_intro_part2_pdf](http://bit.ly/berd_intro_part2_pdf)
+
+# Summarizing categorical data: frequency tables
+
+-   We will be creating frequency tables using the **`tabyl` function from the `janitor` package** (loaded above).
+
+## Frequency table for one variable
+
+Default table:
+
+```{r}
+yrbss_data %>% 
+  tabyl(age)  
+```
+
+Make the output prettier using `adorn_` options and adding on `gt()`:
+
+::: columns
+::: {.column width="50%"}
+With adornments:
+
+```{r}
+yrbss_data %>% 
+  tabyl(age)   %>%
+  adorn_totals("row") %>% 
+  adorn_pct_formatting(digits=2)
+```
+:::
+
+::: {.column width="50%"}
+With adornments & `gt()`:
+
+```{r}
+yrbss_data %>% 
+  tabyl(age)   %>%
+  adorn_totals("row") %>% 
+  adorn_pct_formatting(digits=2) %>% 
+  gt() # from the gt package
+```
+:::
+:::
+
+## Contingency tables (two-way tables)
+
+-   **Contingency tables** summarize data for two categorical variables
+    -   with each value in the table representing the number of times\
+        a particular combination of outcomes occurs
+-   **Row & column totals** added with `adorn_totals` option
+    -   Can choose to include row and/or column totals
+
+```{r}
+#| output-location: column
+
+# ages vs. grades:
+
+yrbss_data %>% 
+  tabyl(age, grade) %>%    
+  adorn_totals(c("row", "col")) %>% 
+  adorn_title(placement = "combined") %>% 
+  gt()
+```
+
+## Contingency tables with percentages
+
+-   How are the percentages calculated in the code below?
+-   What else was added to the table, other than the percentages?
+
+```{r}
+yrbss_data %>% 
+  tabyl(age, grade) %>%    
+  adorn_totals(c("row")) %>%
+  adorn_percentages("row") %>%   
+  adorn_pct_formatting(digits=0) %>%    
+  adorn_ns() %>% 
+  gt()
+```
+
+## Stratified (3-way) tables
+
+We can also add a third variable, which creates 2x2 tables stratified by the third variable:
+
+```{r}
+yrbss_data %>% 
+  tabyl(age, grade, sex)
+```
+
+*Make sure to scroll down in the output box above to see all of the output*
+
+## More `tabyl` and `adorn_` options
+
+ 
+
+::: {style="font-size: 110%;"}
+See the [`tabyl`s vignette](https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html) for more `tabyl` and `adorn_` options:
+
+<https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html>
+:::
+
+# Practice time! (part 2)
+
+1.  Create a contingency table for `race4` and `race7`, with both percentages and counts. What is the difference between these two variables?
+2.  Create a contingency table for `race4` and `race7`, with both percentages and counts, stratified by `grade`.
+3.  Calculate the minimum, median, and maximum BMI and weights of participants in the YRBSS data.
+4.  Calculate the minimum, median, and maximum BMI and weights of the participants in the YRBSS data, now stratified by age.
+
+# Data visualization
+
+-   This is a *very brief* introduction to creating plots using the `ggplot2` package.
+    -   The `ggplot2` package gets loaded with the `tidyverse` and thus we do not need to load it separately.
+
+::: columns
+::: {.column width="40%"}
+![[ggplot](https://ggplot2.tidyverse.org/index.html)](image/ggplotlogo.png){fig-align="center" height="400"}
+:::
+
+::: {.column width="60%"}
+![[Artwork by \@allison_horst](https://allisonhorst.com/)](image/ggplot2_masterpiece.png){fig-align="center" height="400"}
+:::
+:::
+
+# Visualizing quantitative variables
+
+-   What is the distribution shape of a quantitative variable?
+-   Does the distribution shape of a quantitative variable change when stratified by a categorical variable?
+-   Is there an association between two quantitative variables?
+
+## Histograms
+
+```{r}
+ggplot(data = yrbss_data,    # specify the dataset
+       # aes = aesthetics: specify variables being used
+       aes(x = bmi)) +  
+  geom_histogram() # type of plot
+```
+
+## Boxplots
+
+-   Recall that the whiskers' ends are the minimum and maximum values
+-   The box is from the first to third quartiles, with the line inside the box at the median
+
+::: columns
+::: {.column width="50%"}
+**BMI**:\
+horizontal boxplot (specify `x = ...`)
+
+```{r}
+#| fig.height: 3
+#| fig.width: 5
+
+ggplot(data = yrbss_data,   # dataset
+  # aes: specify vars being used
+       aes(x = bmi)) +   
+  geom_boxplot()   # type of plot
+```
+:::
+
+::: {.column width="50%"}
+**Weight**: vertical boxplot (specify `y = ...`)
+
+```{r}
+#| fig.height: 3
+#| fig.width: 5
+
+ggplot(data = yrbss_data, 
+# use y instead of x in aes for vertical:
+  aes(y = stweight)) + 
+  geom_boxplot() 
+```
+:::
+:::
+
+## Stratified boxplots (plus axis labels & title!)
+
+```{r}
+ggplot(data = yrbss_data, 
+       aes(
+         # horizontal boxplots for BMI (x=):
+         x = bmi,
+         # stratified vertically (y=) by age:
+         y = age
+         )) + 
+  geom_boxplot() + 
+  # Add on labels and a title:
+  labs(x = "BMI", 
+       y = "Age", 
+       title =  "BMI distributions by age category"
+       )  
+```
+
+## Add color using `fill`
+
+-   Also remove the `NA` category with `drop_na()` (we will talk about this in later slides)
+-   What's the difference in use of `fill=` here?
+
+::: columns
+::: {.column width="50%"}
+```{r}
+#| fig.height: 5
+#| fig.width: 7
+ggplot(
+  data = yrbss_data %>% drop_na(age), #NEW!
+  aes(
+    x = bmi,
+    y = age,
+    fill = age  # NEW!
+  )) + 
+  geom_boxplot() +
+  # remove legend:
+  theme(legend.position="none") 
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| fig.height: 5
+#| fig.width: 7
+ggplot(
+  data = yrbss_data %>% drop_na(age), #NEW!
+  aes(
+    x = bmi,
+    y = age,
+    fill = sex  # NEW!
+  )) + 
+  geom_boxplot() 
+```
+:::
+:::
+
+## Scatterplots
+
+```{r}
+ggplot(data = yrbss_data, # specify the dataset
+       # aes = aesthetics: specify variables being used
+       aes(x = stweight,       
+           y = bmi
+           )) +  
+  geom_point()    # type of plot     
+```
+
+## Scatterplot with color-coded dots
+
+```{r}
+ggplot(data = yrbss_data, 
+       # aes = aesthetics: specify variables being used
+       aes(x = stweight,      
+           y = bmi,  
+           color = sex,
+           )) +   
+  geom_point(alpha = .2) # alpha controls transparency of the points
+```
+
+## Color vs. fill vs. alpha
+
+ 
+
+::: {style="font-size: 110%;"}
+-   `color` (or `colour`) is used for lines and outlines
+-   `fill` is used for interiors
+-   Note: geom_point() shape default is a point with only an outline and no interior -\> *we used color and not fill*
+
+ 
+
+-   `alpha` specifies the opacity / transparency
+    -   Values range from 0 to 1
+    -   lower alphas are more transparent
+
+ 
+
+-   See ggplot webpage [Colour related aesthetics: colour, fill, and alpha](https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html) for more information
+:::
+
+# Visualizing categorical variables
+
+## Barplots
+
+By default, barplots display counts (frequencies) on the vertical axis:
+
+```{r}
+#| fig.width: 10
+ggplot(data = yrbss_data, 
+       aes(x = age)) +
+  geom_bar() + # plot type 
+  # angle the x-axis labels so that they are not overlapping
+  theme(axis.text.x = element_text(angle = -45, hjust = 0))
+```
+
+## Barplots with proportions
+
+\* To show proportions, the code is more complicated.
+
+```{r}
+#| fig.width: 10
+ggplot(data = yrbss_data, 
+       aes(x = age)) +
+  # specify aesthetics within the barplot to show proportions
+  geom_bar(aes(y = after_stat(prop), group = 1)) + 
+  
+  # Next line converts y-axis labels to percentages instead of proportions
+  scale_y_continuous(labels =  scales::percent_format()) +
+  
+  # "dodge" the x-axis labels
+  scale_x_discrete(guide = guide_axis(n.dodge = 2))
+```
+
+## Barplots with 2 variables: segmented bar plots
+
+::: columns
+::: {.column width="50%"}
+Stacked bars showing counts:
+
+```{r}
+#| fig.width: 10
+ggplot(data = yrbss_data, 
+       aes(x = age,
+           # specify variable for colors 
+           fill = grade)) + 
+  geom_bar()
+```
+:::
+
+::: {.column width="50%"}
+For proportions within each bar:\
+(added `position = "fill"` within `geom_bar()`)
+
+```{r}
+#| fig.width: 10
+ggplot(data = yrbss_data, 
+       aes(x = age,
+           # specify variable for colors
+           fill = grade)) + 
+  geom_bar(position = "fill")
+```
+:::
+:::
+
+## Side-by-side barplots
+
+```{r}
+#| fig.width: 10
+ggplot(data = yrbss_data, 
+       aes(x = age,
+           # specify variable for colors 
+           fill = grade)) + 
+  geom_bar(position = "dodge") +
+  # angle the x-axis labels so that they are not overlapping
+  theme(axis.text.x = element_text(angle = -15, hjust = 0))
+```
+
+## Saving a ggplot as an image file
+
+::: columns
+::: {.column width="50%"}
+First, create a plot and save it as an R object:
+
+```{r}
+myplot <- ggplot(data = yrbss_data, 
+       aes(x = age,
+           # specify variable for colors 
+           fill = grade)) + 
+  geom_bar() +
+  # angle the x-axis labels so that they are not overlapping
+  theme(axis.text.x = element_text(angle = -15, hjust = 0))
+
+myplot
+```
+:::
+
+::: {.column width="50%"}
+Save the plot as a pdf (or "jpeg", "tiff", "png", etc.)
+
+```{r}
+ggsave(
+  filename = "output/myplot.pdf",
+  plot = myplot,
+  device = "pdf",
+  width = 5,
+  height = 3,
+  units = "in",
+  dpi = 200)  
+```
+
+Can specify the dpi when saving, many journals have dpi requirements.
+
+See `ggsave` webpage for more details:
+
+::: {style="font-size: 75%;"}
+<https://ggplot2.tidyverse.org/reference/ggsave.html>
+:::
+:::
+:::
+
+## \* More ggplot topics
+
+ 
+
+-   Change the [**theme**](https://ggplot2-book.org/themes) of the plot
+    -   This includes the color scheme, text font and size, and other options.
+    -   There are many existing themes to choose from.
+
+ 
+
+-   Arrange multiple plots as one
+    -   [patchwork](https://patchwork.data-imaginist.com/) package
+    -   Claus O. Wilke's [cowplot](https://wilkelab.org/cowplot/articles/index.html) package
+    -   [Shared legend for all plots!](https://wilkelab.org/cowplot/articles/shared_legends.html)
+
+## \* More ggplot workshop slides
+
+ 
+
+-   These slides are heavily adapted from R workshops
+    -   presented together with Jessica Minnier, PhD
+    -   sponsored by *OCTRI Biostatistics, Epidemiology, Research & Design (BERD)*:
+
+ 
+
+-   **Data Visualization with R and ggplot2** 2020/05/20
+    -   html slides: [bit.ly/berd_ggplot](https://jminnier-berd-r-courses.netlify.app/04-ggplot/04_ggplot_slides.html)
+    -   pdf slides: [bit.ly/berd_ggplot_pdf](https://jminnier-berd-r-courses.netlify.app/04-ggplot/04_ggplot_slides.pdf)
+    -   [recording](https://echo360.org/media/34465dc2-ae46-4508-b5a7-b0fee860682e/public) of the presentation
+
+# Missing data summary & visualization
+
+-   I *highly recommend* the tutorial: **Exploring missing values in `naniar`** <https://allisonhorst.shinyapps.io/missingexplorer/>
+-   These slides have some highlights of tools presented in the tutorial
+
+Load the `naniar` package if haven't already:
+
+```{r}
+library(naniar)
+```
+
+![[Artwork by \@allison_horst](https://allisonhorst.com/r-packages-functions)](image/horst_naniar.png){fig-align="center"}
+
+## Missingness statistics
+
+Total number of missing values in dataset:
+
+```{r}
+n_miss(yrbss_data)
+```
+
+Proportion of missing values in dataset:
+
+```{r}
+prop_miss(yrbss_data)
+```
+
+Missingness by each variable:
+
+```{r}
+miss_var_summary(yrbss_data) %>% gt()
+```
+
+## Visualizing missing data across dataset
+
+::: columns
+::: {.column width="50%"}
+-   This plot helps visualize whether
+    -   there are variables with a lot of missing values and/or
+    -   participants with a lot of missing values
+:::
+
+::: {.column width="50%"}
+-   Each row is an observation
+-   Columns are for the different variables in the dataset
+-   Black = missing, grey = not missing
+:::
+:::
+
+```{r}
+vis_miss(yrbss_data) 
+```
+
+## Missingness heatmap by group
+
+-   This plot is useful in comparing missingness rates stratified by a variable
+-   Specify the variable to stratify the missingness heatmap by in the `fct =` option
+
+Example: Percent missingness stratified by age group
+
+```{r}
+gg_miss_fct(yrbss_data, fct = age) 
+```
+
+## Missingness intersections (UpSet plot)
+
+-   UpSet plots are great for finding sets of variables that have a lot of missingess.
+
+```{r}
+gg_miss_upset(yrbss_data, nsets = 10) 
+```
+
+# Practice time! (part 3)
+
+1.  Create a histogram for the `stweight` variable. Describe the distribution shape.
+2.  What happens if you change `x =` to `y =` in the histogram code?
+3.  Create boxplots of `stweight` stratified by sex.
+4.  Create a barplot of race4 categories with the y axis showing percentages.
+5.  Visualize the missing data across the YRBSS subset dataset we created `toy_data` using `vis_miss()`. What missingness patterns do you see?
+
+# Data wrangling
+
+![[Artwork by \@allison_horst](https://allisonhorst.com/r-packages-functions)](image/horst_data_cowboy.png){fig-align="center"}
+
+## **Sorting** datasets using `arrange()`
+
+`arrange()` is a function that lets us **sort** a `data.frame` by a specified variable.
+
+-   By default, it sorts in *ascending* order:
+
+```{r}
+yrbss_data %>% 
+  arrange(record)
+```
+
+-   To sort by descending order, you need to wrap the variable in the `desc()` function:
+
+```{r}
+yrbss_data %>% 
+  arrange(desc(record))
+```
+
+## Sorting datasets by multiple variables
+
+-   You can also arrange by multiple variables.
+    -   The code below sorts by `age` *first*, and then within `age`, we sort by `record`.
+
+```{r}
+yrbss_data %>% 
+  arrange(age, record)
+```
+
+-   Note that order of variables in `arrange()` matters!
+
+```{r}
+yrbss_data %>% 
+  arrange(record, age)
+```
+
+## `arrange()` after `count()`-ing categorical data
+
+-   Another example of when `arrange()` is useful
+-   We've used `tabyl()` to see what values exist in a categorical variable.
+
+::: columns
+::: {.column width="48%"}
+-   We can also use `count()` to count all of the unique values for a categorical variable.
+-   This will also show `NA` category, which is the special missing variable type:
+
+```{r}
+yrbss_data %>%
+  count(age)
+```
+:::
+
+::: {.column width="4%"}
+:::
+
+::: {.column width="48%"}
+-   Sometimes it helps to arrange by that category if you have many categories to view.
+-   This can also alert us if there are categorical coding mistakes (such as misspellings) in our data.
+
+```{r}
+yrbss_data %>%
+  count(age) %>%
+  arrange(n)
+```
+:::
+:::
+
+## Saving changes we make to a dataset
+
+-   Note that we have not changed the order of the `yrbss_data` dataset after arranging:
+
+```{r}
+head(yrbss_data)
+```
+
+-   We need to *save our work* by re-assigning the sorted/arranged dataset as `yrbss_data` with the `<-` operator:
+
+```{r}
+yrbss_data <- yrbss_data %>% arrange(desc(record))
+
+yrbss_data
+```
+
+# Subsetting data
+
+![](image/datawrangle_cheatsheet_subset_rows.png){fig-align="center"}
+
+![[data transformation cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)](image/datawrangle_cheatsheet_subset_cols.png){fig-align="center"}
+
+# Subset rows: `filter()`ing data
+
+![[Artwork by \@allison_horst](https://allisonhorst.com/everything-else)](image/horst_dplyr_filter.jpg){fig-align="center"}
+
+## `filter()`ing quantitative data
+
+::: columns
+::: {.column width="30%"}
+`filter()` is an extremely powerful function. It lets us **subset our data** according to specific criteria.
+
+-   Let's filter on a `numeric` variable, `bmi`:
+
+***Note the double equal signs!*** `==` is a *test* of whether two things are equal, it is not an assignment (i.e. `x = 5` assigns the value 5 to the object `x`).
+:::
+
+::: {.column width="70%"}
+```{r}
+yrbss_data %>%
+  filter(bmi > 40)
+
+yrbss_data %>%
+  filter(bmi == 13.9)
+
+yrbss_data %>%
+  filter(bmi == 13.9229)
+```
+:::
+:::
+
+## `filter()`ing cateogrical data
+
+::: columns
+::: {.column width="50%"}
+-   To filter on a categorical variable, we need to know the values (levels) of the variable:
+:::
+
+::: {.column width="50%"}
+```{r}
+yrbss_data %>% tabyl(grade)
+```
+:::
+:::
+
+[***Note the double equal signs!***]{style="color:darkorange"} `==` is a *test* of whether two things are equal, it is not an assignment (i.e. `x = 5` assigns the value 5 to the object `x`).
+
+```{r}
+yrbss_data %>%
+  filter(grade == "10th") #We must include " " around the value for categorical variables
+```
+
+-   If we want everything except 10th grade, we use the ["not equal" sign]{style="color:darkorange"} `!=`
+
+```{r}
+yrbss_data %>%
+  filter(grade != "10th")
+```
+
+## Filtering requires a little logic
+
+-   We can chain multiple criteria using the [`&` (AND)]{style="color:darkorange"} or [`|` (OR) operators]{style="color:darkorange"}.
+    -   But we need to review a little logic before we do this.
+
+ 
+
+-   If we wanted to return participants who identified as
+    -   `Female` **and** are in 10th grade,
+    -   we would use an `&` to chain these criteria together:
+
+```         
+sex == "Female" & grade == "10th"
+```
+
+ 
+
+-   Note that *SPELLING AND CASE MATTER*!
+    -   You must write the name of the column exactly and
+    -   also the value (i.e. "Female" not "female") exactly.
+
+## Filtering with `&` (AND) criteria
+
+```{r}
+yrbss_data %>%
+  filter(sex == "Female" & 
+           grade == "10th")
+
+```
+
+-   Note that we could also use the comma in this case:
+
+```{r}
+yrbss_data %>%
+  filter(sex == "Female",    # comma is equivalent to & within filter()
+         grade == "10th")
+
+```
+
+## Filtering with `|` (OR) criteria
+
+If we wanted patients who were
+
+`Female` [**or**]{style="color:darkorange"} in 10th grade
+
+we would use a `|` to chain these criteria together.
+
+```{r}
+yrbss_data %>%
+  filter(sex == "Female" |
+           grade == "10th")
+```
+
+::: {.callout-warning icon="false"}
+## Think about it:
+
+Which of the AND vs. OR code blocks will return a larger number of participants?
+:::
+
+## More filter examples
+
+-   See [this slide](https://jminnier-berd-r-courses.netlify.app/02-data-wrangling-tidyverse/02_data_wrangling_slides_part1.html#27) from a previous BERD workshop.
+
+-   Also read the ["Data Transformation" chapter in R for Data Science](https://r4ds.had.co.nz/transform.html#filter-rows-with-filter).
+
+ 
+
+### More about comparison and logical operators
+
+This is a useful reference for all the different operators (both logical and comparison) that you can use: <https://www.datamentor.io/r-programming/operator/>
+
+## Filtering out missing values using `drop_na()` (1/2)
+
+-   We may want to remove rows that have missing data, which are coded as `NA`.
+
+-   See the [`drop_na()`](https://tidyr.tidyverse.org/reference/drop_na.html) reference for examples (`?drop_na`).
+
+ 
+
+-   First look at rates of missingness using the `naniar` package:
+
+```{r}
+naniar::miss_var_summary(yrbss_data)
+```
+
+## Filtering out missing values using `drop_na()` (2/2)
+
+*Pay attention to the number of rows for each of these results*
+
+-   Remove missingness in one column:
+
+```{r}
+yrbss_data %>% drop_na(race7)
+```
+
+-   Remove missingness in two columns:
+
+```{r}
+yrbss_data %>% drop_na(race7, bmi)
+```
+
+-   Remove all missingness:
+
+```{r}
+yrbss_data %>% drop_na()
+```
+
+## A warning about `filter()`: check for NA
+
+-   Suppose we want to remove the `10th` grade category.
+-   However this column has missingness in it as we can see with `tabyl()`.
+-   When we try to filter using `!="10th"` we lose our `NAs`!
+    -   That isn't really expected.
+-   You need to account for this with an *or* `|` statement:
+
+::: columns
+::: {.column width="45%"}
+```{r}
+yrbss_data %>% 
+  tabyl(grade)
+```
+
+Lost the `NA`'s in the filtering below!
+
+```{r}
+yrbss_data %>% 
+  filter(grade != "10th") %>%
+  tabyl(grade)
+```
+:::
+
+::: {.column width="55%"}
+Updated code to keep the `NA`'s when filtering:
+
+```{r}
+yrbss_data %>%
+  # add an | (OR) statement 
+  # to keep in the NA values
+  filter((grade != "10th") |
+           is.na(grade)) %>%
+  tabyl(grade)
+```
+:::
+:::
+
+# Subset columns: `select()`ing data
+
+![[data transformation cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)](image/datawrangle_cheatsheet_subset_cols.png){fig-align="center"}
+
+## Selecting columns using `select()`
+
+-   The `select()` function allows us to select variables or columns from our dataset:
+
+```{r}
+yrbss_data %>%
+  select(record, age, race4)
+
+```
+
+-   If we want to select everything *except* one variable,
+    -   we can use a `-` in front of that variable.
+
+```{r}
+yrbss_data %>%
+  select(-race4)
+
+```
+
+## `tidyselect`
+
+-   There are ways to search column names and to select them.
+
+-   These are called the `tidyselect` helpers.
+
+-   You can see some examples here: <https://tidyselect.r-lib.org/reference/language.html>
+
+-   For instance, you can see how this might be useful, where we select all columns where the column name includes the word "race":
+
+```{r}
+yrbss_data %>% 
+  select(contains("race"))
+```
+
+-   or select all columns starting with "r":
+
+```{r}
+yrbss_data %>% 
+  select(starts_with("r"))
+```
+
+-   This is a useful shortcut (though use with caution, you need to know your column names and order):
+
+```{r}
+yrbss_data %>% select(1:3)
+```
+
+-   `select()` and `everything()` are a useful combination for some quick rearranging of columns:
+
+```{r}
+yrbss_data %>% select(record, bmi, everything())
+```
+
+-   Note there's also a function [`relocate()` to move around your column order](https://dplyr.tidyverse.org/reference/relocate.html).
+
+## `tidyselect` mini-practice
+
+-   We can also select variables based on data types
+-   For instance, this use of `select(where(is.numeric))` selects all numeric columns
+    -   (`where()` is a helper function that returns columns where the inside function is TRUE,
+    -   in this case `is.numeric` returns the TRUE/FALSE)
+
+```{r}
+yrbss_data %>% select(where(is.numeric))
+```
+
+-   Try using `is.character` to select all character columns, as well as the column `bmi`.
+
+```{r}
+#| eval: FALSE
+# change eval: TRUE above
+yrbss_data %>% select(____, _____)
+```
+
+## \*\* Learn more about `tidyselect` (BONUS - on your own)
+
+-   See some more examples in [this slide](https://jminnier-berd-r-courses.netlify.app/02-data-wrangling-tidyverse/02_data_wrangling_slides_part1.html#32) from a previous BERD workshop
+
+-   For more info and learning about `tidyselect`, please run this code in your console:
+
+```{r}
+#| eval: FALSE
+# install remotes package
+install.packages("remotes")
+
+# use remotes to install this package from github
+remotes::install_github("laderast/tidyowl")
+
+# load tidyowl package
+library(tidyowl)
+
+# interactive tutorial
+tidyowl::learn_tidyselect()
+```
+
+## The difference between `filter()` and `select()`
+
+ 
+
+-   One thing to keep in mind is that:
+    -   `filter()` works on [rows]{style="color:darkorange"} (think FILTER in Excel!), and
+    -   `select()` works on [columns]{style="color:darkorange"} (select your relevant variables)
+
+ 
+
+Keep that in mind!
+
+## Renaming with `rename()`
+
+-   You can rename columns with `select()` but it's a bit easier to do this with the `rename()` function.
+
+-   You just need to remember **`new_name = old_name`** ordering.
+
+    -   One equal sign will suffice!
+
+```{r}
+yrbss_data %>% rename(id = record,
+                  race_cat = race4,
+                  weight = stweight)
+```
+
+ 
+
+*Note that [we did not save the changes above]{style="color:darkorange"}, and thus we haven't actually renamed the variables in the dataset `yrbss_data`!*
+
+## Saving our results as a file
+
+-   Let's save some processed data in the `output/` directory.
+-   We'll save it as an `xlsx` file so that we can open it in Excel.
+
+```{r}
+# chain together several data transformation steps with %>%
+
+# use <- to assign the new data to a different name to avoid overwriting the original dataset
+
+processed_data <- yrbss_data %>%   
+  select(-race7) %>%
+  rename(id = record,
+         race_cat = race4,
+         weight = stweight) %>%
+  filter(sex == "Female")
+
+glimpse(processed_data)
+```
+
+[Save]{style="color:darkorange"} the `processed_data`:
+
+```{r}
+write_xlsx(x = processed_data,
+                path = "output/processed_data.xlsx")
+```
+
+# Practice time! (part 4)
+
+Perform some subsetting functions on the `yrbss_data` data:
+
+1.  Use `filter()` to select people who are in 9th or 10th grade and who have BMI less than 25. Save the resulting dataset as `yrbss_filtered`.
+
+2.  Use `rename()` to rename 2 of the column names of `yrbss_filtered` to something more meaningful.
+
+3.  Use `select()` to keep only the columns that denote record, sex, grade, bmi, and the 2 renamed columns.
+
+4.  Arrange the data by bmi, starting with the highest value and ending with the least value.
+
+5.  Save the resulting data set in the file `data/practice4_data.xslx`.
+
+```{r}
+
+
+```
+
+# Make new variables: `mutate()`
+
+::: columns
+::: {.column width="50%"}
+![[Artwork by \@allison_horst](https://allisonhorst.com/everything-else)](image/horst_mutate.jpg){fig-align="center"}
+:::
+
+::: {.column width="50%"}
+![[data transformation cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)](image/datawrangle_cheatsheet_makenewvars.png){fig-align="center"}
+:::
+:::
+
+## Columns in a dataset
+
+-   Remember we learned to use `select()` to change columns in a `data.frame`,
+    -   but this is based on existing columns.
+-   For instance, removing two columns:
+
+```{r}
+yrbss_data %>% select(-record, -sex)
+```
+
+-   What if we want to add new columns to our data,
+    -   or change the data in the columns in some way?
+
+## `mutate()` - A confusing name, a powerful `dplyr` verb
+
+::: columns
+::: {.column width="50%"}
+-   So what is mutate? `mutate()` is one of the most useful `dplyr` verbs.
+-   You can use `mutate()` to
+    -   transform existing data (variables in your `data.frame`) and/or
+    -   add new variables into the data.frame.
+:::
+
+::: {.column width="50%"}
+![[Artwork by \@allison_horst](https://allisonhorst.com/everything-else)](image/horst_mutate.jpg){fig-align="center" width="70%"}
+:::
+:::
+
+Think of this like adding a formula in Excel to calculate the value of a new column based on previous columns. You can do lots of things such as:
+
+-   subtract one column from another
+-   convert the units of one column to new units (such as days to years)
+-   change the capitalization of categories in a variable
+-   recode a continuous variable to be a categorical one
+
+## Using `mutate` to calculate a new variable based on other variables (1/3)
+
+-   One use for `mutate` is to do Excel type calculations using other columns in the data.
+    -   For instance, we might want to covert weight to kg, assuming `stweight` is in lbs
+-   Notice we use `=` inside mutate, not `==` or `<-`.
+    -   We are not making a logical operation, nor are we assigning something to an object name.
+
+```{r}
+yrbss_data %>% 
+    mutate(weight_kg = stweight/2.205) %>%
+    glimpse()
+```
+
+-   Remember, since we haven't assigned this new "mutated" dataset to an object name, our work hasn't been saved.
+
+## Using `mutate` to calculate a new variable based on other variables (2/3)
+
+-   Below, we save the new dataset as `yrbss_new`
+    -   to avoid overwriting our other data set.
+    -   Check out the environment tab for the new dataset.
+-   Notice also how we can mutate multiple variables at one time.
+    -   We can also mutate using multiple columns.
+    -   Here we have created two new weight variables in different scales
+    -   In the next *Practice time*, you will make a height variable from `bmi` and `weight_kg`
+
+```{r}
+yrbss_new <- yrbss_data %>% 
+    mutate(weight_kg = stweight/2.205,
+           weight_g = weight_kg*1000)
+
+glimpse(yrbss_new)
+```
+
+## Using `mutate` to calculate a new variable based on other variables (3/3)
+
+Figure examining the newly created variables using `mutate`:
+
+```{r}
+ggplot(yrbss_new) +
+  aes(x = stweight, 
+      y = weight_kg) +
+  geom_point()
+```
+
+## Brief aside: categorical data (`factor`s)
+
+-   One data type that we haven't yet looked at are `factor`s
+
+    -   [factors are how R represents **levels** of *categorical data*]{style="color:darkorange"}.
+
+-   For the most part, you can use `character` and `factors` interchangeably for categorical data.
+
+-   However, there is one main difference.
+
+    -   `factor`s define the permissible values in a vector with an argument called `levels`.
+    -   They also define the order in which these values are displayed.
+
+```{r}
+character_vector <- c("Dog", "Dog", "Cat", "Mouse")   # c() is the concatenate function
+class(character_vector)
+tabyl(character_vector)
+```
+
+-   The default order of levels is in **alphanumeric** order.
+-   You can make a character vector into a factor vector by using the `factor()` function, and supplying an argument called `levels`.
+
+## **Levels** of a `factor` variable
+
+-   The `levels` of a factor are the *permissible values* in a `factor`.
+
+-   The **order of the values in a factor variable** determine the order in which the values appear in tables and on the axes in a plot.
+
+-   You can control the order of the categories in a factor by specifying the order of the categories in the `levels` argument.
+
+-   You can find out the levels of the factor with the function `levels()` or `tabyl()`.
+
+::: columns
+::: {.column width="50%"}
+```{r}
+factor_vector <- factor(character_vector)
+
+class(factor_vector)
+
+# what are the levels of this vector?
+levels(factor_vector)
+
+tabyl(factor_vector)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+# specify our own ordering of levels
+factor_vector2 <- factor(character_vector, 
+                        levels = c("Dog", "Cat", "Mouse"))
+
+levels(factor_vector2)
+
+tabyl(factor_vector2)
+```
+:::
+:::
+
+Being able to specify the ordering is the main reason to use `factors`, at least in plotting and calculating counts.
+
+## Mini-practice
+
+ 
+
+-   Change the order of `factor_vector` to be "Mouse", "Cat", "Dog".
+
+ 
+
+-   Verify that you did it correctly by calling `tabyl()` or `levels()`
+
+```{r}
+#| eval: FALSE
+
+factor_vector <- factor(____, 
+                        levels = _____)
+
+tabyl(factor_vector)
+
+levels(factor_vector)
+
+```
+
+## Using `mutate` to transform `character` variables into `factors`
+
+-   We can also use use `mutate()` to make a `character` variable a `factor`.
+
+-   Let's convert `age` from `character` into `factor`:
+
+```{r}
+yrbss_data %>% 
+  #create a factor variable
+  mutate(age_fac = factor(age))
+```
+
+-   An example with grade:
+
+```{r}
+yrbss_data %>% 
+  #create a factor variable
+  mutate(grade = factor(grade)) 
+```
+
+-   One thing to notice:
+    -   we are doing something called [*reassignment* in the grade example]{style="color:darkorange"}.
+    -   We're taking the previous values of our variable (`grade`),
+        -   doing something to it (making it a `factor`), and then reassigning the variable `grade` to our new set of values.
+
+## `levels` of a `factor` variable revisited
+
+-   Remember when we wanted to decide the order of the categories of the factor?
+    -   We can assign that order using the `levels` argument in `factor()`.
+    -   We can check the ordering with `tabyl()`
+
+```{r}
+yrbss_data %>%
+  tabyl(grade)    # Order of grades is not correct
+```
+
+-   Create grade_fac variable to be a factor version of grade with "correct" levels order:
+
+```{r}
+yrbss_data %>% 
+  mutate(grade_fac = factor(grade, 
+                      levels = c("9th","10th","11th","12th"))) %>%
+  tabyl(grade_fac)
+```
+
+-   Notice that the order of the grade categories is now correct
+
+::: callout-warning
+*Remember spelling matters!*
+:::
+
+-   If we try to use a factor level that doesn't exist ("10" vs "10th"),
+    -   we won't have any data in that category, and
+    -   the non-specified levels ("10") get set to `NA` missing.
+
+```{r}
+yrbss_data %>% 
+  mutate(grade_fac = factor(grade, 
+                      levels = c("9th","10","11th","12th"))) %>%
+  tabyl(grade_fac)
+```
+
+# Practice time! (part 5)
+
+1.  Create a new variable `height` that calculates height based on `bmi` and `weight_kg`. Note the formula for BMI is weight/height\^2 (weight is in kilograms and height is in meters). Create a scatterplot of `bmi` vs `height`.
+2.  Create a new factor variable `sex_fac` that orders the values of `sex` as Male, Female.
+
+# Make categorical variables with `case_when()`
+
+![[Artwork by \@allison_horst](https://allisonhorst.com/everything-else)](image/dplyr_case_when.png){fig-align="center"}
+
+## `case_when()`
+
+-   Currently the grade variable is a character vector. How do we change these to numeric?
+-   Or, how might we dichotomize a continuous variable such as bmi?
+-   Or, what if we want to combine categories?
+
+First let's start with a simple binary 2 category variable.
+
+-   We need to follow the **basic pattern** for each of our categories inside `case_when()`:
+    -   [*condition* \~ *category name*]{style="color:darkorange"}
+    -   The *left* side of the `~` is where we can specify how we *define* the category based on our column variable names.
+    -   The *right* side of the `~` is where we can specify the *category name* (as a character).
+    -   Separate each "case" with a comma.
+
+## `case_when()` example 1
+
+-   In the example below, we are converting `sex` to a character variable called `female`:
+    -   `sex == "Female"` tests whether the column `sex` is Female, which is how we define the category 1
+        -   1 is the new value, and this is the right side of `~`
+    -   `sex == "Male"` tests whether the column `sex` is Male, which is how we define the category 0
+        -   0 is the new value, and this is the right side of `~`
+-   Note how `NA` is handled here:
+
+```{r}
+yrbss_data %>%
+  mutate(female = case_when(
+    sex == "Female" ~ 1, # do not forget this comma!
+    sex == "Male" ~ 0
+  )) %>%
+  tabyl(female) # look at the categories
+```
+
+## `case_when()` example 2
+
+-   In the example below, we are dichotomizing the continuous variable bmi into two categories
+-   We need to do this for each level in our category:
+
+[*left side* defines the condition *\~* *right side* names the category]{style="color:darkorange"}
+
+```{r}
+yrbss_data %>%
+  mutate(
+    bmi30 = case_when(
+      bmi < 30 ~ "<30", # don't forget a comma between cases
+      bmi >= 30 ~ "30+"
+    )
+  ) %>%
+  tabyl(bmi30)
+    
+```
+
+## `case_when()` example 3
+
+Next we recode bmi to have 3 levels:
+
+-   `<20` (not including exactly 20)
+-   `20-30` (not including exactly 30)
+-   `30+`
+
+Notice the middle category we use an & statement similar to how we used logic in filter
+
+```{r }
+yrbss_data %>%
+  mutate(
+    bmi3cat = case_when(
+      bmi < 20 ~ "<20",
+      (bmi >=20) & (bmi < 30) ~ "20-30",
+      bmi >= 30 ~ "30+"
+    )
+  ) %>%
+  mutate(bmi3cat = factor(bmi3cat)) %>%   # make it factor after creating categories
+  tabyl(bmi3cat)
+```
+
+# Practice time! (part 6)
+
+1.  Create a new category variable called `grade_num` in `yrbss_data` that converts `grade` to numeric.
+2.  Create a new variable called `race_cat` that relabels `race4` to have shorter race category names: W (White), H/L (Hispanic/Latino), B/AA (Black or African American), Other (All other races). Make `race_cat` a factor variable with levels ordered by the size of the group in descending order.
+3.  Create a `tabyl` of the new variable `race_cat` and `race4` to check your work, including the ordering of the factors.
+
+# Try what we've learned with making figures using `ggplot2`
+
+## Recall boxplots `geom_boxplot()`
+
+-   Boxplots can be used to compare the distribution of a quantitative variable among categories.
+    -   We need a categorical variable (here, our `x` axis)
+    -   and a continuous numeric variable, shown here on our `y` axis.
+
+```{r}
+#| output-location: column
+
+# creating a boxplot
+
+ggplot(yrbss_data) +
+  aes(x = grade, 
+      y = bmi) +
+  geom_boxplot()
+```
+
+-   The main differences from the scatterplots we created earlier are the `geom` type and the variables plotted.
+
+-   We can change the color similarly to scatterplots.
+
+    -   However, we map to `fill` and not `color` if we want to fill in the box with color:
+
+```{r}
+#| output-location: column
+
+# adding color
+ggplot(yrbss_data) +
+  aes(x = grade, 
+      y = bmi,
+      fill = grade) +
+  geom_boxplot()
+```
+
+## Factor levels when plotting
+
+-   Perhaps we want to **change the order of the `grade` levels** in our plot.
+-   This is where factor levels are useful:
+
+```{r}
+yrbss_new <- yrbss_data %>% 
+  mutate(grade = factor(grade, levels = c("9th", "10th", "11th", "12th"))) %>%
+  drop_na(grade)
+
+ggplot(yrbss_new) +
+  aes(x = grade, 
+      y = bmi,
+      fill = grade) +
+  geom_boxplot()
+```
+
+## Faceting our boxplot with `facet_wrap()`
+
+::: columns
+::: {.column width="35%"}
+-   One of the most powerful ways to change a visualization is by *faceting*.
+    -   We can make multiple plots stratifying by a categorical variable.
+-   To do this, we have to add the `facet_wrap()` command to our plot.
+    -   We need to specify the variable to `facet_wrap` - `race4` by using the `vars()` function to specify it as a variable.
+:::
+
+::: {.column width="65%"}
+```{r}
+#| fig.height: 8
+
+# facet_wrap:
+ggplot(yrbss_new) +
+  aes(x = bmi, 
+      y = grade,
+      fill = grade) +
+  geom_boxplot() +
+  facet_wrap(vars(factor(race4)))  #NEW!
+```
+:::
+:::
+
+-   *Don't try to facet on a continous `numeric` variable - it won't work.*
+
+-   Don't forget to look at the help documentation (e.g., `?facet_wrap`) to learn more about additional ways to customize your plots!
+
+## Faceting our boxplot with `facet_grid()`
+
+::: columns
+::: {.column width="35%"}
+-   Another way to facet our plots is with `facet_grid()`,
+    -   which lets us select the rows and columns based on categorical variables:
+:::
+
+::: {.column width="65%"}
+```{r}
+#| fig.height: 8
+#| fig.width: 12
+
+ggplot(yrbss_new) +
+  aes(x = bmi, 
+      y = sex,
+      fill = sex) +
+  geom_boxplot() +
+  facet_grid(rows = vars(grade),  #NEW!
+             cols = vars(race4))
+```
+:::
+:::
+
+## Mini-practice
+
+Facet the boxplot below by `age` and `grade`, don't forget the `vars()`:
+
+```{r}
+#| eval: FALSE
+# change eval: TRUE above
+
+ggplot(yrbss_new) +
+  
+  aes(x = bmi, 
+      y = sex,
+      fill = sex) +
+  
+  geom_boxplot() + 
+  
+  facet_grid(______)
+```
+
+## Back to `mutate`: using `mutate` to replace missing values with `replace_na`
+
+-   Sometimes we want to fill in missing values with a certain value.
+-   We can use the `replace_na()` function inside of `mutate()` to specify this.
+-   For example, suppose if the bmi variable is missing,
+    -   we want to replace it with the average bmi across the entire data set.
+
+```{r}
+yrbss_new <- yrbss_data %>%
+  mutate(bmi_filled =
+           replace_na(bmi,
+                      mean(bmi, na.rm = TRUE)))           
+yrbss_new %>% 
+  select(contains("bmi")) %>% 
+  tail()
+```
+
+-   We can also fill in missing values for character vectors
+    -   Here we replace missingness in the `grade` column with `unknown`:
+
+```{r}
+yrbss_new <- yrbss_new %>%
+    mutate(gradefilled = replace_na(grade, "unknown"))
+
+yrbss_new %>% 
+  tabyl(gradefilled, grade)
+```
+
+# Practice time! (part 7)
+
+1.  Create a barplot of `race4`, faceted by `sex`.
+
+# Useful keyboard shortcuts
+
+[Full list of keyboard shortcuts](https://support.posit.co/hc/en-us/articles/200711853-Keyboard-Shortcuts)
+
+| action                              | mac                | windows/linux   |
+|-------------------------------------|--------------------|-----------------|
+| Run code in qmd (or script)         | cmd + enter        | ctrl + enter    |
+| `<-`                                | option + -         | alt + -         |
+| interrupt currently running command | esc                | esc             |
+| keyboard shortcut help              | option + shift + k | alt + shift + k |
+
+ 
+
+**Practice:** Try typing code below in your qmd (with shortcut) and evaluating it (with shortcut):
+
+```{r}
+#| eval: false
+y <- 5
+y
+```
+
+# Conclusions
+
+![Artwork by \@allison_horst](image/horst_r_first_then.png){fig-align="center"}
+
+## You WILL get frustrated while learning R!
+
+From Garrett Grolemund's Prologue of his book *Hands-On Programming with R*[^1]:
+
+[^1]: Grolemund, Garrett. 2014. Hands-on Programming with R. O’Reilly. <https://rstudio-education.github.io/hopr/>
+
+> As you learn to program, you are going to get frustrated. You are learning a new language, and it will take time to become fluent. But frustration is not just natural, it’s actually a positive sign that you should watch for. Frustration is your brain’s way of being lazy; it’s trying to get you to quit and go do something easy or fun. If you want to get physically fitter, you need to push your body even though it complains. If you want to get better at programming, you’ll need to push your brain. Recognize when you get frustrated and see it as a good thing: you’re now stretching yourself. Push yourself a little further every day, and you’ll soon be a confident programmer.
+
+## Where are you in your R learning timeline?
+
+![[Artwork by \@allison_horst](https://allisonhorst.com/everything-else)](image/horst_timeline_Rlearning.png){fig-align="center"}
+
+# Resources
+
+# More intro R and markdown slides
+
+-   These slides are heavily adapted from past R workshops
+    -   sponsored by *OCTRI Biostatistics, Epidemiology, Research & Design (BERD)*:
+-   **Introduction to R and RStudio for Exploratory Data Analysis: Part 1** 2020/09/16
+    -   slides: [bit.ly/berd_intro_part1](http://bit.ly/berd_intro_part1)
+    -   pdf: [bit.ly/berd_intro_part1_pdf](http://bit.ly/berd_intro_part1_pdf) - recording of the presentation [1st half link](https://echo360.org/media/b9bb7e08-8cf4-4f04-84a8-3236f89a3281/public); [2nd half link](https://echo360.org/media/955bbbb1-4953-40f1-b769-f53afff40b20/public)
+-   **Introduction to R and RStudio for Exploratory Data Analysis: Part 2** 2020/09/17
+    -   slides: [bit.ly/berd_intro_part2](http://bit.ly/berd_intro_part2)
+    -   pdf: [bit.ly/berd_intro_part2_pdf](http://bit.ly/berd_intro_part2_pdf) - [recording of the presentation](https://echo360.org/media/04d4ec82-35a6-43b2-8463-2db51f936c6d/public)
+-   **Reproducible Reports with R Markdown** 2019/09/25
+    -   slides: [bit.ly/berd_rmd_2019](http://bit.ly/berd_rmd_2019)
+    -   pdf: [bit.ly/berd_rmd_pdf_2019](http://bit.ly/berd_rmd_pdf_2019) - [recording of the presentation](https://echo360.org/media/b082e803-0677-445f-9688-f96b9c36dc93/public)
+    -   Note: most of this applies to Quarto as well, but there are some differences between Quarto and R Markdown.
+
+## Quarto Resources
+
+-   [Official Quarto guide:](https://quarto.org/docs/guide/) https://quarto.org/docs/guide/
+    -   [Markdown basics:](https://quarto.org/docs/authoring/markdown-basics.html) https://quarto.org/docs/authoring/markdown-basics.html
+        -   Text formatting, headings, linnks, images, lists, tables, equations, diagrams, page breaks, keyboard shortcuts, and more!
+    -   [Code blocks:](https://quarto.org/docs/computations/r.html#code-blocks) https://quarto.org/docs/computations/r.html#code-blocks
+        -   [Chunk options:](https://quarto.org/docs/computations/r.html#chunk-options) https://quarto.org/docs/computations/r.html#chunk-options
+-   Mine Çetinkaya-Rundel's [Quarto tip a day:](https://mine-cetinkaya-rundel.github.io/quarto-tip-a-day/) https://mine-cetinkaya-rundel.github.io/quarto-tip-a-day/\
+-   Hadley Wickham's [R for Data Science:](https://r4ds.hadley.nz/) https://r4ds.hadley.nz/
+    -   See Chapter 29 for Quarto
