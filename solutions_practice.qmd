@@ -1,0 +1,401 @@
+---
+title: "Practice Solutions"
+subtitle: "Getting Started in R and Rstudio"
+institute: "OHSU OCTRI-BERD"
+author: "Jessica Minnier, Meike Niederhausen"
+date: "04/30/2026"
+format: 
+  html:
+    link-external-newwindow: true
+    toc: true
+    toc_float:
+      collapsed: false
+    number-sections: false
+    number-depth: 4
+    theme: minty
+    embed-resources: true
+    html-math-method: mathjax
+execute:
+  echo: true
+editor: visual
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r}
+#| label: "setup" 
+#| include: false
+#| message: false
+#| warning: false
+
+# Load packages 
+library(tidyverse)
+library(writexl)
+library(rstatix)
+library(janitor)
+library(naniar)
+library(gt)
+library(gtsummary)
+library(readxl)  # part of tidyverse, but not the tidyverse core
+```
+
+# Part 1
+
+Open the Excel file `yrbss_demo.xlsx` in the *data* *folder* to familiarize yourself with it.
+
+Use R code to answer the following questions.
+
+## 1
+
+1.  Load the dataset `yrbss_demo.xlsx`. Make sure the name of the loaded data is `yrbss_data`.
+
+```{r}
+# library(readxl)
+# note we are saving the data from the Excel file in our environment 
+# with the object name yrbss_data
+yrbss_data <- read_excel("data/yrbss_demo.xlsx")
+```
+
+## 2
+
+2.  What are the column names?
+
+```{r}
+names(yrbss_data)
+
+# can also use glimpse:
+glimpse(yrbss_data) 
+```
+
+## 3
+
+3.  How many rows and columns are in `yrbss_data`?
+
+```{r}
+nrow(yrbss_data)
+
+ncol(yrbss_data)
+
+# both rows & columns:
+dim(yrbss_data)
+```
+
+## 4
+
+4.  Which variables are numeric (quantitative)?
+
+```{r}
+glimpse(yrbss_data) 
+```
+
+- Record, bmi, and stweight are numeric, although record actually serves as a categorical variable.
+- Interestingly age and grade are not.
+
+## 5
+
+5.  Which variables are character?
+
+```{r}
+glimpse(yrbss_data) 
+```
+
+- Age, sex, grade, race4, and race7 are character variables.
+
+# Part 2
+
+## 1
+
+1.  Create a contingency table for `race4` and `race7`, with both percentages and counts. What is the difference between these two variables?
+
+```{r}
+yrbss_data %>%
+  tabyl(race7, race4) %>%
+  adorn_percentages() %>%
+  adorn_pct_formatting() %>%
+  adorn_ns() %>%
+  adorn_title(placement = "combined") %>%
+  gt()
+```
+
+## 2
+
+2.  Create a contingency table for `race4` and `race7`, with both percentages and counts, stratified by `grade`.
+
+```{r}
+yrbss_data %>%
+  tabyl(race7, race4, grade) %>%
+  adorn_percentages() %>%
+  adorn_pct_formatting() %>%
+  adorn_ns() %>%
+  adorn_title(placement = "combined") # gt doesn't work here
+```
+
+## 3
+
+3.  Calculate the minimum, median, and maximum BMI and weights of participants in the YRBSS data.
+
+There are a couple of options to do this. I chose the five number summary option.
+
+```{r}
+yrbss_data %>% 
+  get_summary_stats(
+    bmi, stweight,
+    type = c("five_number")
+    ) %>% 
+  gt()
+```
+
+## 4
+
+4.  Calculate the minimum, median, and maximum BMI and weights of the participants in the YRBSS data, now stratified by age.
+
+```{r}
+yrbss_data %>% 
+  group_by(age) %>% 
+  get_summary_stats(
+    bmi, stweight,
+    type = c("five_number")
+    ) %>% 
+  gt()
+```
+
+# Part 3
+
+## 1
+
+1.  Create a histogram for the `stweight` variable. Describe the distribution shape.
+
+```{r}
+ggplot(yrbss_data, aes(x = stweight)) + 
+  geom_histogram()
+```
+
+The student weights have a skewed right distribution, with a long tail for higher weights.
+
+## 2
+
+2.  What happens if you change `x =` to `y =` in the histogram code?
+
+The axes are flipped and we get a horizontal histogram.
+
+```{r}
+ggplot(yrbss_data, aes(y = stweight)) + 
+  geom_histogram() # axes are flipped
+```
+
+## 3
+
+3.  Create boxplots of `stweight` stratified by sex.
+
+The weights of males are slightly greater than for females.
+
+```{r}
+ggplot(yrbss_data, 
+       aes(x = stweight, y = sex)) + 
+  geom_boxplot() 
+```
+
+## 4
+
+4.  Create a barplot of race4 categories with the y axis showing percentages.
+
+```{r}
+ggplot(data = yrbss_data, 
+       aes(x = race4)) +
+  # specify aesthetics within the barplot to show proportions
+  geom_bar(aes(y = after_stat(prop), group = 1)) +
+  # Next line converts y-axis labels to percentages instead of proportions
+  scale_y_continuous(labels =  scales::percent_format())   +
+  labs(y = "Percent") # default label is prop
+```
+
+## 5
+
+5.  Visualize the missingness patterns of the `toy_data` YRBSS subset using `vis_miss()`. What missingness patterns do you see?
+
+```{r}
+toy_data <- read_excel("data/toy_data.xlsx", na = "NA")
+
+vis_miss(toy_data)
+```
+
+We see a lot of missingness in the `text_while_driving` variable (about half missing), and some missingness for `smoked_ever`, `bullied_past_12mo`, and `race4`.
+
+# Part 4
+
+Perform some subsetting functions on the `yrbss_data` data:
+
+## 1
+
+1.  Use `filter()` to select people who are in 9th or 10th grade and who have BMI less than 25. Save the resulting data as `yrbss_filtered` tibble.
+
+```{r}
+# first let's see what the categories look like
+yrbss_data %>%
+  tabyl(grade)
+
+# now we filter with the "or" operator | on grade and then the "and" operator or comma on bmi
+yrbss_filtered <- yrbss_data %>%
+  filter(grade == "9th" | grade == "10th", 
+         bmi < 25
+         )
+
+# check this worked
+nrow(yrbss_filtered)
+yrbss_filtered %>% 
+  group_by(grade) %>% 
+  get_summary_stats(
+    bmi,
+    type = c("common")
+    ) %>% 
+  gt()
+
+# Note that output only includes 9th & 10th grade
+# and max BMI is < 25
+```
+
+## 2
+
+2.  Use `rename()` to rename 2 of the column names of `yrbss_filtered` to something more meaningful.
+
+```{r}
+names(yrbss_filtered)
+
+yrbss_filtered2 <- yrbss_filtered %>% 
+  rename(ID = record, 
+         weight = stweight)
+
+names(yrbss_filtered2)
+```
+
+## 3
+
+3.  Use `select()` to keep only the columns that denote record, sex, grade, bmi, and the 2 renamed columns.
+
+```{r}
+yrbss_filtered3 <- yrbss_filtered2 %>%
+  select(ID, sex, grade, bmi, weight)
+
+# check:
+glimpse(yrbss_filtered3)
+```
+
+## 4
+
+4.  Arrange the data by bmi, starting with the highest value and ending with the least value.
+
+```{r}
+yrbss_filtered3 <- yrbss_filtered3 %>%
+  arrange(desc(bmi))
+
+yrbss_filtered3
+```
+
+## 5
+
+5.  Save the resulting data set in the file `data/practice4_data.xslx`.
+
+```{r}
+write_xlsx(yrbss_filtered3, path = "data/practice4_data.xlsx")
+```
+
+# Part 5
+
+*Note: code below is using `yrbss_data` instead of `yrbss_new`.*
+
+## 1
+
+1.  Create a new variable `height` that calculates height based on `bmi` and `weight_kg`. Note the formula for BMI is weight/height\^2 (weight is in kilograms and height is in meters). Create a scatterplot of `bmi` vs `height`.
+
+```{r}
+yrbss_data <- yrbss_data %>% 
+  mutate(height = sqrt(stweight/bmi))
+
+ggplot(yrbss_data, aes(x=height, y = bmi)) + 
+  geom_point()
+```
+
+## 2
+
+2.  Create a new factor variable `sex_fac` that orders the values of `sex` as Male, Female.
+
+```{r}
+yrbss_data <- yrbss_data %>%
+  mutate(sex_fac = factor(sex,
+                          levels = c("Male", "Female")))
+         
+# check:
+glimpse(yrbss_data)
+
+yrbss_data %>% tabyl(sex_fac, sex)
+```
+
+# Part 6
+
+*Note: code below is using `yrbss_data` instead of `yrbss_new`.*
+
+## 1
+
+1.  Create a new variable called `grade_num` in `yrbss_data` that converts `grade` to numeric.
+
+```{r}
+yrbss_data %>% tabyl(grade)
+
+yrbss_data <- yrbss_data %>% 
+  mutate(grade_num = 
+           case_when(
+             grade == "10th" ~ 10, 
+             grade == "11th" ~ 11, 
+             grade == "12th" ~ 12, 
+             grade == "9th" ~ 9))
+
+# check:
+yrbss_data %>% tabyl(grade, grade_num)
+
+glimpse(yrbss_data)
+
+```
+
+## 2
+
+2.  Create a new variable called `race_cat` that relabels `race4` to have shorter race category names: W (White), H/L (Hispanic/Latino), B/AA (Black or African American), Other (All other races). Make `race_cat` a factor variable with levels ordered by the size of the group in descending order.
+
+```{r}
+yrbss_data %>% tabyl(race4) %>% arrange(desc(n))
+
+yrbss_data <- yrbss_data %>%
+  mutate(
+    race_cat = case_when(
+      race4 == "White" ~ "W",
+      race4 == "Hispanic/Latino" ~ "H/L",
+      race4 == "Black or African American" ~ "B/AA",
+      race4 == "All other races" ~ "Other"
+      ),
+    race_cat = factor(race_cat, levels = c("W", "Other", "H/L", "B/AA"))
+    )
+
+```
+
+## 3
+
+3.  Create a `tabyl` of the new variable `race_cat` and `race4` to check your work, including the ordering of the factors.
+
+```{r}
+# Check:
+yrbss_data %>% tabyl(race4, race_cat) |> adorn_title()
+```
+
+# Part 7
+
+*Note: code below is using `yrbss_data` instead of `yrbss_new`.*
+
+## 1
+
+1.  Create a barplot of `race4`, faceted by `sex`.
+
+```{r}
+ggplot(yrbss_data, aes(x=race4)) + 
+  geom_bar() +
+  facet_wrap(vars(sex)) +
+  theme(axis.text.x = element_text(angle = -45, hjust = 0))
+```

@@ -1,5 +1,6 @@
 ---
 title: "Getting Started in R and RStudio"
+pagetitle: "Slides for Getting Started in R and RStudio"
 subtitle: "Parts 1 & 2 (4/30/26, 5/11/26)"
 institute: "OHSU OCTRI-BERD"
 author: "Jessica Minnier, Meike Niederhausen"
@@ -632,14 +633,15 @@ Data from the CDC's [Youth Risk Behavior Surveillance System (YRBSS)](https://ww
 
 # Practice time! (part 1)
 
+Open the Excel file `yrbss_demo.xlsx` in the *data* *folder* to familiarize yourself with it.
+
 Use R code to answer the following questions.
 
-1.  Open the Excel file `yrbss_demo.xlsx` in the *data* *folder* to familiarize yourself with it.
-2.  Load the dataset `yrbss_demo.xlsx`. Make sure the name of the loaded data is `yrbss_data`.
-3.  What are the column names?
-4.  How many rows and columns are in `yrbss_data`?
-5.  Which variables are numeric (quantitative)?
-6.  Which variables are character?
+1.  Load the dataset `yrbss_demo.xlsx`. Make sure the name of the loaded data is `yrbss_data`.
+2.  What are the column names?
+3.  How many rows and columns are in `yrbss_data`?
+4.  Which variables are numeric (quantitative)?
+5.  Which variables are character?
 
 # Load the YRBSS data
 
@@ -1041,6 +1043,9 @@ yrbss_data |>
 
 ![Image from [https://gt.rstudio.com/](https://gt.rstudio.com/){target="_blank"}](image/gt_parts_of_a_table.png){fig-align="center" width="100%"} 
 
+
+
+
 # Practice time! (part 2)
 
 1.  Create a contingency table for `race4` and `race7`, with both percentages and counts. What is the difference between these two variables?
@@ -1243,11 +1248,10 @@ ggplot(data = yrbss_data,
   
   # Next line converts y-axis labels to percentages instead of proportions
   scale_y_continuous(labels =  scales::percent_format()) +
-  
   # "dodge" the x-axis labels
   scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
-  
   labs(y = "Percent") # default label is prop
+
 ```
 
 ## Barplots with 2 variables: segmented bar plots
@@ -1958,10 +1962,7 @@ Perform some subsetting functions on the `yrbss_data` data:
 
 5.  Save the resulting data set in the file `data/practice4_data.xslx`.
 
-```{r}
 
-
-```
 
 # Make new variables: `mutate()`
 
@@ -2183,6 +2184,7 @@ names(yrbss_new)
 # Practice time! (part 5)
 
 1.  Create a new variable `height` that calculates height based on `bmi` and `weight_kg`. Note the formula for BMI is weight/height\^2 (weight is in kilograms and height is in meters). Create a scatterplot of `bmi` vs `height`.
+
 2.  Create a new factor variable `sex_fac` that orders the values of `sex` as Male, Female.
 
 # Make variables with `case_when()`
@@ -2313,8 +2315,10 @@ yrbss_new |>
 
 # Practice time! (part 6)
 
-1.  Create a new category variable called `grade_num` in `yrbss_data` that converts `grade` to numeric.
+1.  Create a new variable called `grade_num` in `yrbss_new` that converts `grade` to numeric.
+
 2.  Create a new variable called `race_cat` that relabels `race4` to have shorter race category names: W (White), H/L (Hispanic/Latino), B/AA (Black or African American), Other (All other races). Make `race_cat` a factor variable with levels ordered by the size of the group in descending order.
+
 3.  Create a `tabyl` of the new variable `race_cat` and `race4` to check your work, including the ordering of the factors.
 
 
@@ -2505,6 +2509,8 @@ ggplot(yrbss_new) +
 # Practice time! (part 7)
 
 1.  Create a barplot of `race4`, faceted by `sex`.
+
+
 
 # Useful keyboard shortcuts
 
