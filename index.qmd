@@ -20,4 +20,4 @@ No prior experience in R or RStudio is necessary. Installation materials will be
 
 -   [R & RStudio installation instructions](https://ohsu-octri-berd.github.io/R_RStudio_Installation/){target="_blank"}
 
--   Workshop [slides](slides_R_berd_2026.qmd){target="_blank"}
+-   (*DRAFT*) Workshop [slides](slides_R_berd_2026.qmd){target="_blank"}
