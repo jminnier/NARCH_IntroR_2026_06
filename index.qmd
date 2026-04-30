@@ -17,8 +17,6 @@ See the [About](about.qmd) page for information about the workshop.
 
 -   [R & RStudio installation instructions](https://ohsu-octri-berd.github.io/R_RStudio_Installation/){target="_blank"}
 
--   (*DRAFT*) Workshop [slides](slides_R_berd_2026.qmd){target="_blank"}
-
 
 # Open files for today's workshop
 
