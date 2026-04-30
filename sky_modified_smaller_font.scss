@@ -70,6 +70,39 @@ div.cell-output-stdout pre {
   font-size: 1.0em;
 }
 
+
+// Tabset tab headers
+.panel-tabset [role="tab"] {
+  background-color: #e6efe9 !important;
+  color: #333 !important;
+  border: 1px solid #b8cfc4 !important;
+  border-radius: 0.4rem 0.4rem 0 0 !important;
+  margin-right: 0.2rem;
+  padding: 0.2em 0.7em;
+}
+
+// Hover state
+.panel-tabset [role="tab"]:hover {
+  background-color: #cfe3da !important;
+  color: #222 !important;
+  border-color: #9fbeaf !important;
+}
+
+// Active tab
+.panel-tabset [role="tab"][aria-selected="true"] {
+  background-color: #0fa67b !important;
+  color: #fff !important;
+  border-color: #0fa67b !important;
+  font-weight: 700;
+}
+
+// Optional: tab content area
+.panel-tabset .tab-content,
+.panel-tabset .panel-tabset-tabby {
+  border-top: 1px solid #b8cfc4;
+}
+
+
 .orange {
   color: $theme-orange;
   font-weight: bold;

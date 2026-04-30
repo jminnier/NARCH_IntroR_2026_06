@@ -1,9 +1,20 @@
 ---
 title: "About"
+pagetitle: "About"
+institute: "OHSU OCTRI-BERD"
+author: "Jessica Minnier, Meike Niederhausen"
+date: "04/30/2026"
 ---
 
-About this site
+-   This workshop is a part of the OCTRI Research Forum seminars on [BERD](https://www.ohsu.edu/octri/biostatistics-epidemiology-and-research-design){target="_blank"}-Informatics topics. 
+-   For past workshops and a link of the recording that will posted there, see the [OCTRI Research Forum](https://www.ohsu.edu/octri/octri-research-forum-your-monthly-clinical-and-translational-research-event#accordion-384136-2){target="_blank"} webpage.
 
-```{r}
-1 + 1
-```
+## Abstract
+
+In this two -part interactive workshop, we will introduce the freely available statistical software programs R and RStudio to attendees with no prior experience. We will cover how to use RStudio to write and run code, introduce data structure types, and demonstrate commands for working with data: loading, viewing, summarizing, plotting, cleaning, and saving. You will learn basic R data wrangling and plotting principles, and how to
+use them to create high-quality reproducible documents to present your work.
+
+No prior experience in R or RStudio is necessary. Installation materials will be circulated ahead of Part 1. We encourage you to bring a laptop with R and RStudio installed. For installation assistance, please join at 1:30 p.m. (30 minutes early) to Part 1 on April 30.
+
+-   Part 1: Thursday, April 30, 2:00 to 3:30 p.m.
+-   Part 2 : Monday, May 11 , 2:00 to 3:30 p.m.
