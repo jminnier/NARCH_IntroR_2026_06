@@ -71,24 +71,24 @@ library(writexl)
 theme_set(theme_bw(base_size = 22))
 ```
 
-# Load files for today's workshop
+# !!!!!!!!UPDATE - Load files for today's workshop
 
-1.  Open Google Doc <https://bit.ly/berd_r_intro_2024_doc>
+<!-- 1.  Open Google Doc <https://bit.ly/berd_r_intro_2024_doc> -->
 
-    -   Use this to post questions!
-    -   This has all the links in it
+<!--     -   Use this to post questions! -->
+<!--     -   This has all the links in it -->
 
-2.  Download folder of files using link <https://bit.ly/berd_intro_2024_files>
+<!-- 2.  Download folder of files using link <https://bit.ly/berd_intro_2024_files> -->
 
-    -   **Do you have a PC? Need to right click .zip file and select EXTRACT ALL**
+<!--     -   **Do you have a PC? Need to right click .zip file and select EXTRACT ALL** -->
 
-    -   Do you have a Mac? Just double click .zip file and it will open
+<!--     -   Do you have a Mac? Just double click .zip file and it will open -->
 
-    -   These files are hosted on github <https://github.com/OHSU-OCTRI-BERD/R_Intro_2024_09>
+<!--     -   These files are hosted on github <https://github.com/OHSU-OCTRI-BERD/R_Intro_2024_09> -->
 
-3.  Open the slides file (html) in a web browser: `slides_R_berd_2024.html` or use the link <https://bit.ly/berd_intro_2024_slides>
+<!-- 3.  Open the slides file (html) in a web browser: `slides_R_berd_2024.html` or use the link <https://bit.ly/berd_intro_2024_slides> -->
 
-4.  [Open RStudio by double-clicking on the file]{style="color:darkorange"} `berd_r_intro_2024_09.Rproj`
+<!-- 4.  [Open RStudio by double-clicking on the file]{style="color:darkorange"} `berd_r_intro_2024_09.Rproj` -->
 
 ## Overview
 
