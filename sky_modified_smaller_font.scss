@@ -17,8 +17,8 @@ $presentation-font-size-root: 27px;
 // colors
 $body-bg: #f7fbfc !default;
 $body-color: #333 !default;
-$link-color: #3b759e !default;
-$selection-bg: #134674 !default;
+$link-color: #0fa67b !default;
+$selection-bg: #3e6e02 !default;
 
 // headings
 $presentation-heading-font: "Quicksand", sans-serif !default;
@@ -36,22 +36,39 @@ $code-block-bg: transparent !default;
 
 // Background generator
 @mixin bodyBackground() {
-  @include radial-gradient(#add9e4, #f7fbfc);
+  @include radial-gradient(#e8ffcc, #f7fbfc);
 }
 
 /*-- scss:rules --*/
 
 // Fix links so they are not cut off
 .reveal a {
-  line-height: 1.3em;
+  line-height: 1.4em;
 }
 
 
+// Size of the R code shown in code chunks
+.reveal pre code,
+.reveal pre.sourceCode code,
 code.sourceCode {
-  font-size: 1.3em;
-  /* or try font-size: xx-large; */
+  font-size: 1.2em;
 }
 
+// Size of printed output from running the code
+.cell-output pre,
+div.cell-output-stdout pre {
+  font-size: 0.55em;
+}
+
+// Size of code-styled output in the output area
+.cell-output code {
+  font-size: 0.85em;
+}
+
+// Size of text within ticks
+.reveal code {
+  font-size: 1.0em;
+}
 
 .orange {
   color: $theme-orange;

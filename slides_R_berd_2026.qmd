@@ -1,9 +1,10 @@
 ---
-title: "Getting Started in R and Rstudio"
-subtitle: "Parts 1 & 2"
+title: "Getting Started in R and RStudio"
+subtitle: "Parts 1 & 2 (4/30/26, 5/11/26)"
 institute: "OHSU OCTRI-BERD"
 author: "Jessica Minnier, Meike Niederhausen"
-date: "04/30/2026"
+# date: "04/30/2026"
+date-modified: "today"
 format: 
   revealjs:
       incremental: false
@@ -14,6 +15,7 @@ format:
       height: 825  #default 700
       slide-number: true
       html-math-method: mathjax
+      link-external-newwindow: true
   # html:
   #   link-external-newwindow: true
   #   toc: true
@@ -143,7 +145,7 @@ theme_set(theme_bw(base_size = 22))
 :::
 :::
 
-For the history and details: [Wikipedia](https://bit.ly/1efFmaY)
+For the history and details: [Wikipedia](https://bit.ly/1efFmaY){target="_blank"}
 
 -   an interpreted language (run it through a command line)
 -   procedural programming with functions
@@ -272,9 +274,12 @@ html output\
 
 # 3 types of Quarto content
 
-1.  [*Code chunks*]{style="color:darkorange"}
+1.  [*Code chunks*]{style="color:darkorange"}. <- [*What this workshop focuses on*]{style="color:purple"}
 2.  Text, lists, images, tables, links (covered in Quarto workshop)
 3.  YAML metadata (covered in Quarto workshop)
+
+*To learn more about working with Quarto, check out our BERD workshop*  
+[*Creating Professional Presentations and Websites using R/Quarto*](https://ohsu-octri-berd.github.io/Quarto_BERD_2025/){target="_blank"}.
 
 ![[Illustration by Alison Hill and Allison Horst, for RStudio.](https://allisonhorst.com/horst-hill-collaborations)](image/horst_hedgehog_text_code.png){fig-align="center"}
 
@@ -366,16 +371,19 @@ Note that a code chunks start with ```` ```{r} ```` and ends with ```` ``` ````.
 
 ![](image/code_chunk_insert_visual.png)
 
-# R Packages: install & load
+# R packages: installing & loading
 
 ![](image/tidyverse_celestial.jpg){fig-align="center"}
 
 ## What are R Packages?
 
+<div style="text-align: center;">
 A good analogy for R packages is that they\
-are like apps you can download onto a mobile phone:
+are like apps you can download onto a smart phone
+</div>
 
 ![[ModernDive Figure 1.4](https://moderndive.com/1-getting-started.html#packages)](image/R_vs_R_packages.png){fig-align="center"}
+
 
 ## Installing packages
 
@@ -405,25 +413,53 @@ install.packages("janitor")   # only do this ONCE, use quotes
 
 ## Packages used in this workshop
 
--   **tidyverse**: collection of many commonly used packages, including: readr, forcats, ggplot2 (see list [here](https://www.tidyverse.org/packages/))
 
--   For loading datasets:
+::: {.columns}
+                                        
+::: {.column width="62%"}
+-   **{tidyverse}**
+    -   A collection of many commonly used packages
+    -   **[*Core* {tidyverse}]{style="color:purple"}**: most commonly used {tidyverse} packages
+        -   These are automatically get loaded when {tidyverse} is loaded
+        -   Packages listed in [purple]{style="color:purple"} below are a part of the core
+        -   [Complete list of core {tidyverse} packages](https://tidyverse.tidyverse.org/#usage){target="_blank"})
+    -   **[*Additional* {tidyverse}]{style="color:green"}** packages
+        -   The [additional packages](https://tidyverse.tidyverse.org/#packages) are installed when the {tidyverse} package is installed, but they are not loaded when the {tidyverse} package is loaded. 
+        -   They need to be loaded individually to use.
+        -   Packages listed in [green]{style="color:green"} below are additional {tidyverse} packages
 
-    -   readr (a part of tidyverse)
-    -   **readxl**
+<!-- ![](image/tidyverse_celestial.jpg){fig-align="center"} -->
+:::
+       
+::: {.column width="8%"}
 
--   For summarizing data
+:::
+::: {.column width="30%"}
 
-    -   **janitor**
-    -   **gt**
-    -   **rstatix**
-    -   **gtsummary**
-    -   **naniar**
-    -   ggplot2 (for graphing, loaded with tidyverse)
+-   For **loading** datasets:
 
--   for wrangling data
+    -   [{readr}]{style="color:purple"} 
+    -   [{readxl}]{style="color:green"}
 
-    -   dplyr, tidyr (loaded with tidyverse)
+-   For **summarizing** and **visualizing** data:
+
+    -   {janitor}
+    -   {gt}
+    -   {rstatix}
+    -   {gtsummary}
+    -   {naniar}
+    -   [{ggplot2}]{style="color:purple"} 
+
+-   for **wrangling** data
+
+    -   [{dplyr}, {tidyr}]{style="color:purple"} 
+
+:::
+                                          
+:::
+
+
+
 
 ## Install packages used in this workshop
 
@@ -442,9 +478,9 @@ install.packages("gtsummary")
 
 -   It is **VERY IMPORTANT** that you install these packages in order to run the code for the workshop!
 
-## Load packages with `library()` command
+## Load packages with `library()` function
 
--   Use the `library()` command to load each required package.
+-   Use the `library()` function to load each required package.
 -   Packages need to be loaded *every* time you open Rstudio.
     -   **The code to load packages MUST be in your qmd file.**
     -   *Tip: at the top of your qmd file, create a chunk that loads all of the R packages you want to use in that file.*
@@ -544,7 +580,7 @@ toy_data <- read_excel("data/toy_data.xlsx", na = "NA")
 
 ## Load data from an .xlsx (Excel) file: **code option**
 
--   The point and click option used the `read_excel` command from the `readxl` package to load the xlsx file.
+-   The point and click option used the `read_excel` function from the `readxl` package to load the xlsx file.
 -   If comfortable with coding and the data, we can skip the point and click and directly write the code ourselves.
 -   When loading the dataset, we need to specify where the xlsx file is located, which in this case is in the folder called `data`.
 -   No matter which option we use, the [**code to load the data MUST be in your qmd**]{style="color:darkorange"}.
@@ -564,7 +600,7 @@ toy_data <- read_excel("data/toy_data.xlsx", na = "NA")
 
 ::: columns
 ::: {.column width="50%"}
--   Run the `View` command below within RStudio.
+-   Run the `View` function below within RStudio.
 
 ```{r}
 #| eval: FALSE
@@ -663,7 +699,7 @@ glimpse(yrbss_data)
 
 ## View the `YRBSS` dataset
 
--   Run the `View` command below within RStudio.
+-   Run the `View` function below within RStudio.
     -   A new tab in the scripting window will appear with the `yrbss_data` dataset.
 -   Note that the code chunk specifies `#| eval: FALSE` so that this code is not run while rendering the .qmd file.
 
@@ -677,27 +713,30 @@ First 20 rows shown below:
 
 ![](image/View_yrbss_data.png){fig-align="center"}
 
-# Summarizing data and `%>%`
+# Summarizing data and `|>`
 
 -   Often we want to summarize columns of data
 -   Quantitative data and categorical/text data will be summarized differently
--   We also introduce the [pipe symbol]{style="color:darkorange"} `%>%`, which is used to string together commands
+-   We also introduce the [pipe symbol]{style="color:darkorange"} `|>`, which is used to string together functions
 
 The [pipe is read "and then"]{style="color:darkorange"} and tells R the next function will be applied to the data on the left side of the pipe:
 
 ```{r}
-yrbss_data %>%
+yrbss_data |>
   head() # shows top rows
 ```
 
 # Summarizing quantitative data
+
+
+## `get_summary_stats()` from the `{rstatix}` package
 
 -   The **`rstatix` package** has a useful function called `get_summary_stats()` for quick statistics of quantitative data
 
 ```{r}
 # library(rstatix)
 
-yrbss_data %>% 
+yrbss_data |> 
   get_summary_stats(
     bmi, stweight,
     type = "common"
@@ -707,13 +746,13 @@ yrbss_data %>%
 -   The `type` options are
     -   `type = c("full", "common", "robust", "five_number", "mean_sd", "mean_se", "mean_ci", "median_iqr", "median_mad", "quantile", "mean", "median", "min", "max")`
 
-## Stratified summaries (and more on `%>%`)
+## Stratified summaries (and more on `|>`)
 
 -   Now let's **summarize the BMI and weight variables by a strata subgroup**.
 -   We do this with the `group_by()` function
--   Notice that we now have two `%>%`:
-    -   `data %>% group_by(...) %>% get_summary_stats(...)`
-    -   With the pipe symbol `%>%` we can **string together many commands** in the order we want them applied. Example:
+-   Notice that we now have two `|>`:
+    -   `data |> group_by(...) |> get_summary_stats(...)`
+    -   With the pipe symbol `|>` we can **string together many functions** in the order we want them applied. Example:
         -   first tell R what dataset to use,
 
         -   then have R group (stratify) the data by `sex`,
@@ -721,8 +760,8 @@ yrbss_data %>%
         -   and then calculate summary statistics
 
 ```{r}
-yrbss_data %>% 
-  group_by(sex) %>%
+yrbss_data |> 
+  group_by(sex) |>
   get_summary_stats(
     bmi, stweight,
     type = "common"
@@ -734,8 +773,8 @@ yrbss_data %>%
 -   We can specify more than one variable within `group_by()` to stratify the summaries by more variables
 
 ```{r}
-yrbss_data %>% 
-  group_by(sex, grade) %>%
+yrbss_data |> 
+  group_by(sex, grade) |>
   get_summary_stats(
     bmi, stweight,
     type = "common"
@@ -746,28 +785,196 @@ yrbss_data %>%
 
 -   Below we add on `gt()` at the end to make the table prettier.
     -   Make sure to check this out in the html output.
--   The `gt()` command is from the `gt` [package](https://gt.rstudio.com/)
+-   The `gt()` function is from the [`{gt}` package](https://gt.rstudio.com/)
 
 ```{r}
-yrbss_data %>% 
-  group_by(sex, grade) %>%
+yrbss_data |> 
+  group_by(sex, grade) |>
   get_summary_stats(
     bmi, stweight,
     type = "common"
-    ) %>%
+    ) |>
   gt()
 ```
 
-## Advanced examples using `summarize` function
+## `summarize()` function
 
- 
+-   Another option for summarizing numeric data is the `summarize()` function
+-   This is helpful if you want to create *customized summaries*
+-   See [examples from BSTA 526](https://niederhausen.github.io/BSTA_526_W26/part4/part_04_b526.html#summarize-data){target="_blank"} on how to use `summarize()`
 
-Below are links to data summary examples in our previous OCTRI-BERD workshop on *Introduction to R and RStudio for Exploratory Data Analysis: Part 2* using the function `summarize()`:
+Below are brief examples to give you an idea of how `summarize()` works:
 
--   [Summarize examples: Slides 6 - 12](https://jminnier-berd-r-courses.netlify.app/01-intro-r-eda/01_intro_r_eda_part2.html#6)
--   All slides:
-    -   html slides: [bit.ly/berd_intro_part2](http://bit.ly/berd_intro_part2)
-    -   pdf slides: [bit.ly/berd_intro_part2_pdf](http://bit.ly/berd_intro_part2_pdf)
+-   Simple `summarize()` example 
+    -   one variable, one summary statistic, one grouping variable
+
+```{r}
+yrbss_data |> 
+  group_by(grade) |>
+  summarize(mean = mean(bmi, na.rm = TRUE)) |> 
+  gt()
+```
+
+-   Advanced `summarize()` example 
+    -   two variables, two summary statistics, two grouping variables
+
+```{r}
+yrbss_data |> 
+  group_by(sex, grade) |>
+  summarize(across(.cols = c(bmi, stweight), 
+                   .fns = list(
+                     mean = ~ mean(.x, na.rm = TRUE),
+                     sd = ~ sd(.x, na.rm = TRUE)
+                   ))) |> 
+  gt()
+```
+
+
+
+
+# Two pipes in R: `|>` vs `%>%`
+
+![](image/captchas_pipe_wickham.png){fig-align="center" width="40%"} 
+
+[Image from [https://www.linkedin.com/posts/hadleywickham_rstats-activity-7435450431968919552-hY19](https://www.linkedin.com/posts/hadleywickham_rstats-activity-7435450431968919552-hY19)]{.smaller}
+
+## Two pipes in R: `|>` vs `%>%`
+
+- Both pipes are used to write code from **left to right** 
+    -   by passing the result of one step into the next. 
+
+
+::: {.panel-tabset}
+### Background
+
+- The newer **base R pipe `|>`** was introduced in 2021 with the release of R 4.1.0.
+- The original **magrittr pipe `%>%`** 
+    -   comes from the {magrittr} package and 
+    -   became popular through the tidyverse.
+
+<br>
+
+-   Using the **base R pipe `|>`** does *not* require loading the {tidyverse} package (which includes {magrittr}),
+    -   while using the **magrittr pipe `%>%`** does require {tidyverse}.
+
+### Similarities
+
+-   They work the same when the left-hand side becomes the **first argument** of the next function.
+-   Example: 
+
+::: {.columns}
+                                        
+::: {.column width="50%"}
+
+Using `|>`
+```{r}
+yrbss_data |> dim()
+```
+
+:::
+                                          
+::: {.column width="50%"}
+Using `%>%`
+```{r}
+yrbss_data %>% dim()
+```
+
+:::
+:::
+
+
+
+### Differences
+
+*When do `|>` and `%>%` behave differently?*
+
+::: {.panel-tabset}
+
+#### [Simple example]{style="color:purple"}
+
+::: {.columns}
+                                        
+::: {.column width="50%"}
+
+- `|>` is **stricter** and expects an actual function call on the right
+
+```{r}
+yrbss_data |> dim()
+```
+
+```{r}
+#| error: true
+yrbss_data |> dim
+```
+
+-   `yrbss_data |> dim()` works, but  `yrbss_data |> dim` does not: 
+:::
+                                          
+::: {.column width="50%"}
+With `%>%`, we can omit the `()` after the function name:
+```{r}
+yrbss_data %>% dim()
+yrbss_data %>% dim
+```
+
+:::
+:::
+
+#### [Advanced example]{style="color:purple"}
+
+-   Code below runs a linear regression model with dependent variable `bmi` and independent variable `age`.
+
+- Using `%>%`: 
+    -   note that for the data argument a `.` is used as the placeholder for the dataset `yrbss_data` since it's already being "fed into" the model.
+
+```{r}
+yrbss_data %>% lm(bmi ~ age, data = .)
+```
+
+- Using `|>`: 
+-   Using a `.` as as a placeholder for the data does not work with the newer base R `|>`:
+
+```{r}
+#| error: true
+yrbss_data |>  lm(bmi ~ age, data = .)
+```
+
+-   Starting with R 4.3.0, we can use a placeholder but it's an underscore`_`: 
+
+```{r}
+yrbss_data |>  lm(bmi ~ age, data = _)
+```
+
+#### [More advanced examples]{style="color:purple"}
+
+See `Learn more` tab above for resources with more examples.
+
+:::
+
+### For this workshop
+
+We will use `|>` because 
+
+-   it is built into R, 
+-   requires no extra package, and 
+-   works well for most tidyverse code you will write as beginners
+
+Our older workshops and many reference materials use `%>%`. 
+
+
+### Learn more
+
+-   [Differences between the base R and magrittr pipes](https://tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/){target="_blank"} - Tidyverse blog post by Hadley Wickham
+- [Discussion of differences on Stack Overflow](https://stackoverflow.com/questions/67633022/what-are-the-differences-between-rs-native-pipe-and-the-magrittr-pipe){target="_blank"}
+- [R 4.1.0 pipe overview](https://www.jumpingrivers.com/blog/new-features-r410-pipe-anonymous-functions/){target="_blank"}
+-   [Comparing pipes: Base-R |> vs {magrittr} %>%](https://albert-rapp.de/posts/31_pipes_compared/31_pipes_compared){target="_blank"} 
+    -   this resource includes examples and 
+    -   also how to change the "default" pipe in RStudio from `%>%` to `|>` (keyboard shortcut will use `|>`)
+:::
+
+
+
+
 
 # Summarizing categorical data: frequency tables
 
@@ -778,7 +985,7 @@ Below are links to data summary examples in our previous OCTRI-BERD workshop on 
 Default table:
 
 ```{r}
-yrbss_data %>% 
+yrbss_data |> 
   tabyl(age)  
 ```
 
@@ -789,9 +996,9 @@ Make the output prettier using `adorn_` options and adding on `gt()`:
 With adornments:
 
 ```{r}
-yrbss_data %>% 
-  tabyl(age)   %>%
-  adorn_totals("row") %>% 
+yrbss_data |> 
+  tabyl(age)   |>
+  adorn_totals("row") |> 
   adorn_pct_formatting(digits=2)
 ```
 :::
@@ -800,11 +1007,11 @@ yrbss_data %>%
 With adornments & `gt()`:
 
 ```{r}
-yrbss_data %>% 
-  tabyl(age)   %>%
-  adorn_totals("row") %>% 
-  adorn_pct_formatting(digits=2) %>% 
-  gt() # from the gt package
+yrbss_data |> 
+  tabyl(age)   |>
+  adorn_totals("row") |> 
+  adorn_pct_formatting(digits=2) |> 
+  gt() # from the {gt} package
 ```
 :::
 :::
@@ -822,10 +1029,10 @@ yrbss_data %>%
 
 # ages vs. grades:
 
-yrbss_data %>% 
-  tabyl(age, grade) %>%    
-  adorn_totals(c("row", "col")) %>% 
-  adorn_title(placement = "combined") %>% 
+yrbss_data |> 
+  tabyl(age, grade) |>    
+  adorn_totals(c("row", "col")) |> 
+  adorn_title(placement = "combined") |> 
   gt()
 ```
 
@@ -835,12 +1042,12 @@ yrbss_data %>%
 -   What else was added to the table, other than the percentages?
 
 ```{r}
-yrbss_data %>% 
-  tabyl(age, grade) %>%    
-  adorn_totals(c("row")) %>%
-  adorn_percentages("row") %>%   
-  adorn_pct_formatting(digits=0) %>%    
-  adorn_ns() %>% 
+yrbss_data |> 
+  tabyl(age, grade) |>    
+  adorn_totals(c("row")) |>
+  adorn_percentages("row") |>   
+  adorn_pct_formatting(digits=0) |>    
+  adorn_ns() |> 
   gt()
 ```
 
@@ -849,7 +1056,7 @@ yrbss_data %>%
 We can also add a third variable, which creates 2x2 tables stratified by the third variable:
 
 ```{r}
-yrbss_data %>% 
+yrbss_data |> 
   tabyl(age, grade, sex)
 ```
 
@@ -860,9 +1067,9 @@ yrbss_data %>%
  
 
 ::: {style="font-size: 110%;"}
-See the [`tabyl`s vignette](https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html) for more `tabyl` and `adorn_` options:
+See the [`tabyl`s vignette](https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html){target="_blank"} for more `tabyl` and `adorn_` options:
 
-<https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html>
+[https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html](https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html){target="_blank"}
 :::
 
 # Practice time! (part 2)
@@ -967,7 +1174,7 @@ ggplot(data = yrbss_data,
 #| fig.height: 5
 #| fig.width: 7
 ggplot(
-  data = yrbss_data %>% drop_na(age), #NEW!
+  data = yrbss_data |> drop_na(age), #NEW!
   aes(
     x = bmi,
     y = age,
@@ -984,7 +1191,7 @@ ggplot(
 #| fig.height: 5
 #| fig.width: 7
 ggplot(
-  data = yrbss_data %>% drop_na(age), #NEW!
+  data = yrbss_data |> drop_na(age), #NEW!
   aes(
     x = bmi,
     y = age,
@@ -1218,7 +1425,7 @@ prop_miss(yrbss_data)
 Missingness by each variable:
 
 ```{r}
-miss_var_summary(yrbss_data) %>% gt()
+miss_var_summary(yrbss_data) |> gt()
 ```
 
 ## Visualizing missing data across dataset
@@ -1279,14 +1486,14 @@ gg_miss_upset(yrbss_data, nsets = 10)
 -   By default, it sorts in *ascending* order:
 
 ```{r}
-yrbss_data %>% 
+yrbss_data |> 
   arrange(record)
 ```
 
 -   To sort by descending order, you need to wrap the variable in the `desc()` function:
 
 ```{r}
-yrbss_data %>% 
+yrbss_data |> 
   arrange(desc(record))
 ```
 
@@ -1296,14 +1503,14 @@ yrbss_data %>%
     -   The code below sorts by `age` *first*, and then within `age`, we sort by `record`.
 
 ```{r}
-yrbss_data %>% 
+yrbss_data |> 
   arrange(age, record)
 ```
 
 -   Note that order of variables in `arrange()` matters!
 
 ```{r}
-yrbss_data %>% 
+yrbss_data |> 
   arrange(record, age)
 ```
 
@@ -1318,7 +1525,7 @@ yrbss_data %>%
 -   This will also show `NA` category, which is the special missing variable type:
 
 ```{r}
-yrbss_data %>%
+yrbss_data |>
   count(age)
 ```
 :::
@@ -1331,8 +1538,8 @@ yrbss_data %>%
 -   This can also alert us if there are categorical coding mistakes (such as misspellings) in our data.
 
 ```{r}
-yrbss_data %>%
-  count(age) %>%
+yrbss_data |>
+  count(age) |>
   arrange(n)
 ```
 :::
@@ -1349,7 +1556,7 @@ head(yrbss_data)
 -   We need to *save our work* by re-assigning the sorted/arranged dataset as `yrbss_data` with the `<-` operator:
 
 ```{r}
-yrbss_data <- yrbss_data %>% arrange(desc(record))
+yrbss_data <- yrbss_data |> arrange(desc(record))
 
 yrbss_data
 ```
@@ -1377,13 +1584,13 @@ yrbss_data
 
 ::: {.column width="70%"}
 ```{r}
-yrbss_data %>%
+yrbss_data |>
   filter(bmi > 40)
 
-yrbss_data %>%
+yrbss_data |>
   filter(bmi == 13.9)
 
-yrbss_data %>%
+yrbss_data |>
   filter(bmi == 13.9229)
 ```
 :::
@@ -1398,7 +1605,7 @@ yrbss_data %>%
 
 ::: {.column width="50%"}
 ```{r}
-yrbss_data %>% tabyl(grade)
+yrbss_data |> tabyl(grade)
 ```
 :::
 :::
@@ -1406,14 +1613,14 @@ yrbss_data %>% tabyl(grade)
 [***Note the double equal signs!***]{style="color:darkorange"} `==` is a *test* of whether two things are equal, it is not an assignment (i.e. `x = 5` assigns the value 5 to the object `x`).
 
 ```{r}
-yrbss_data %>%
+yrbss_data |>
   filter(grade == "10th") #We must include " " around the value for categorical variables
 ```
 
 -   If we want everything except 10th grade, we use the ["not equal" sign]{style="color:darkorange"} `!=`
 
 ```{r}
-yrbss_data %>%
+yrbss_data |>
   filter(grade != "10th")
 ```
 
@@ -1441,7 +1648,7 @@ sex == "Female" & grade == "10th"
 ## Filtering with `&` (AND) criteria
 
 ```{r}
-yrbss_data %>%
+yrbss_data |>
   filter(sex == "Female" & 
            grade == "10th")
 
@@ -1450,7 +1657,7 @@ yrbss_data %>%
 -   Note that we could also use the comma in this case:
 
 ```{r}
-yrbss_data %>%
+yrbss_data |>
   filter(sex == "Female",    # comma is equivalent to & within filter()
          grade == "10th")
 
@@ -1465,7 +1672,7 @@ If we wanted patients who were
 we would use a `|` to chain these criteria together.
 
 ```{r}
-yrbss_data %>%
+yrbss_data |>
   filter(sex == "Female" |
            grade == "10th")
 ```
@@ -1509,19 +1716,19 @@ naniar::miss_var_summary(yrbss_data)
 -   Remove missingness in one column:
 
 ```{r}
-yrbss_data %>% drop_na(race7)
+yrbss_data |> drop_na(race7)
 ```
 
 -   Remove missingness in two columns:
 
 ```{r}
-yrbss_data %>% drop_na(race7, bmi)
+yrbss_data |> drop_na(race7, bmi)
 ```
 
 -   Remove all missingness:
 
 ```{r}
-yrbss_data %>% drop_na()
+yrbss_data |> drop_na()
 ```
 
 ## A warning about `filter()`: check for NA
@@ -1535,15 +1742,15 @@ yrbss_data %>% drop_na()
 ::: columns
 ::: {.column width="45%"}
 ```{r}
-yrbss_data %>% 
+yrbss_data |> 
   tabyl(grade)
 ```
 
 Lost the `NA`'s in the filtering below!
 
 ```{r}
-yrbss_data %>% 
-  filter(grade != "10th") %>%
+yrbss_data |> 
+  filter(grade != "10th") |>
   tabyl(grade)
 ```
 :::
@@ -1552,11 +1759,11 @@ yrbss_data %>%
 Updated code to keep the `NA`'s when filtering:
 
 ```{r}
-yrbss_data %>%
+yrbss_data |>
   # add an | (OR) statement 
   # to keep in the NA values
   filter((grade != "10th") |
-           is.na(grade)) %>%
+           is.na(grade)) |>
   tabyl(grade)
 ```
 :::
@@ -1571,7 +1778,7 @@ yrbss_data %>%
 -   The `select()` function allows us to select variables or columns from our dataset:
 
 ```{r}
-yrbss_data %>%
+yrbss_data |>
   select(record, age, race4)
 
 ```
@@ -1580,7 +1787,7 @@ yrbss_data %>%
     -   we can use a `-` in front of that variable.
 
 ```{r}
-yrbss_data %>%
+yrbss_data |>
   select(-race4)
 
 ```
@@ -1596,27 +1803,27 @@ yrbss_data %>%
 -   For instance, you can see how this might be useful, where we select all columns where the column name includes the word "race":
 
 ```{r}
-yrbss_data %>% 
+yrbss_data |> 
   select(contains("race"))
 ```
 
 -   or select all columns starting with "r":
 
 ```{r}
-yrbss_data %>% 
+yrbss_data |> 
   select(starts_with("r"))
 ```
 
 -   This is a useful shortcut (though use with caution, you need to know your column names and order):
 
 ```{r}
-yrbss_data %>% select(1:3)
+yrbss_data |> select(1:3)
 ```
 
 -   `select()` and `everything()` are a useful combination for some quick rearranging of columns:
 
 ```{r}
-yrbss_data %>% select(record, bmi, everything())
+yrbss_data |> select(record, bmi, everything())
 ```
 
 -   Note there's also a function [`relocate()` to move around your column order](https://dplyr.tidyverse.org/reference/relocate.html).
@@ -1629,7 +1836,7 @@ yrbss_data %>% select(record, bmi, everything())
     -   in this case `is.numeric` returns the TRUE/FALSE)
 
 ```{r}
-yrbss_data %>% select(where(is.numeric))
+yrbss_data |> select(where(is.numeric))
 ```
 
 -   Try using `is.character` to select all character columns, as well as the column `bmi`.
@@ -1637,7 +1844,7 @@ yrbss_data %>% select(where(is.numeric))
 ```{r}
 #| eval: FALSE
 # change eval: TRUE above
-yrbss_data %>% select(____, _____)
+yrbss_data |> select(____, _____)
 ```
 
 ## \*\* Learn more about `tidyselect` (BONUS - on your own)
@@ -1682,7 +1889,7 @@ Keep that in mind!
     -   One equal sign will suffice!
 
 ```{r}
-yrbss_data %>% rename(id = record,
+yrbss_data |> rename(id = record,
                   race_cat = race4,
                   weight = stweight)
 ```
@@ -1697,15 +1904,15 @@ yrbss_data %>% rename(id = record,
 -   We'll save it as an `xlsx` file so that we can open it in Excel.
 
 ```{r}
-# chain together several data transformation steps with %>%
+# chain together several data transformation steps with |>
 
 # use <- to assign the new data to a different name to avoid overwriting the original dataset
 
-processed_data <- yrbss_data %>%   
-  select(-race7) %>%
+processed_data <- yrbss_data |>   
+  select(-race7) |>
   rename(id = record,
          race_cat = race4,
-         weight = stweight) %>%
+         weight = stweight) |>
   filter(sex == "Female")
 
 glimpse(processed_data)
@@ -1756,7 +1963,7 @@ Perform some subsetting functions on the `yrbss_data` data:
 -   For instance, removing two columns:
 
 ```{r}
-yrbss_data %>% select(-record, -sex)
+yrbss_data |> select(-record, -sex)
 ```
 
 -   What if we want to add new columns to our data,
@@ -1792,8 +1999,8 @@ Think of this like adding a formula in Excel to calculate the value of a new col
     -   We are not making a logical operation, nor are we assigning something to an object name.
 
 ```{r}
-yrbss_data %>% 
-    mutate(weight_kg = stweight/2.205) %>%
+yrbss_data |> 
+    mutate(weight_kg = stweight/2.205) |>
     glimpse()
 ```
 
@@ -1810,7 +2017,7 @@ yrbss_data %>%
     -   In the next *Practice time*, you will make a height variable from `bmi` and `weight_kg`
 
 ```{r}
-yrbss_new <- yrbss_data %>% 
+yrbss_new <- yrbss_data |> 
     mutate(weight_kg = stweight/2.205,
            weight_g = weight_kg*1000)
 
@@ -1918,7 +2125,7 @@ levels(factor_vector)
 -   Let's convert `age` from `character` into `factor`:
 
 ```{r}
-yrbss_data %>% 
+yrbss_data |> 
   #create a factor variable
   mutate(age_fac = factor(age))
 ```
@@ -1926,7 +2133,7 @@ yrbss_data %>%
 -   An example with grade:
 
 ```{r}
-yrbss_data %>% 
+yrbss_data |> 
   #create a factor variable
   mutate(grade = factor(grade)) 
 ```
@@ -1943,16 +2150,16 @@ yrbss_data %>%
     -   We can check the ordering with `tabyl()`
 
 ```{r}
-yrbss_data %>%
+yrbss_data |>
   tabyl(grade)    # Order of grades is not correct
 ```
 
 -   Create grade_fac variable to be a factor version of grade with "correct" levels order:
 
 ```{r}
-yrbss_data %>% 
+yrbss_data |> 
   mutate(grade_fac = factor(grade, 
-                      levels = c("9th","10th","11th","12th"))) %>%
+                      levels = c("9th","10th","11th","12th"))) |>
   tabyl(grade_fac)
 ```
 
@@ -1967,9 +2174,9 @@ yrbss_data %>%
     -   the non-specified levels ("10") get set to `NA` missing.
 
 ```{r}
-yrbss_data %>% 
+yrbss_data |> 
   mutate(grade_fac = factor(grade, 
-                      levels = c("9th","10","11th","12th"))) %>%
+                      levels = c("9th","10","11th","12th"))) |>
   tabyl(grade_fac)
 ```
 
@@ -2006,11 +2213,11 @@ First let's start with a simple binary 2 category variable.
 -   Note how `NA` is handled here:
 
 ```{r}
-yrbss_data %>%
+yrbss_data |>
   mutate(female = case_when(
     sex == "Female" ~ 1, # do not forget this comma!
     sex == "Male" ~ 0
-  )) %>%
+  )) |>
   tabyl(female) # look at the categories
 ```
 
@@ -2022,13 +2229,13 @@ yrbss_data %>%
 [*left side* defines the condition *\~* *right side* names the category]{style="color:darkorange"}
 
 ```{r}
-yrbss_data %>%
+yrbss_data |>
   mutate(
     bmi30 = case_when(
       bmi < 30 ~ "<30", # don't forget a comma between cases
       bmi >= 30 ~ "30+"
     )
-  ) %>%
+  ) |>
   tabyl(bmi30)
     
 ```
@@ -2044,15 +2251,15 @@ Next we recode bmi to have 3 levels:
 Notice the middle category we use an & statement similar to how we used logic in filter
 
 ```{r }
-yrbss_data %>%
+yrbss_data |>
   mutate(
     bmi3cat = case_when(
       bmi < 20 ~ "<20",
       (bmi >=20) & (bmi < 30) ~ "20-30",
       bmi >= 30 ~ "30+"
     )
-  ) %>%
-  mutate(bmi3cat = factor(bmi3cat)) %>%   # make it factor after creating categories
+  ) |>
+  mutate(bmi3cat = factor(bmi3cat)) |>   # make it factor after creating categories
   tabyl(bmi3cat)
 ```
 
@@ -2104,8 +2311,8 @@ ggplot(yrbss_data) +
 -   This is where factor levels are useful:
 
 ```{r}
-yrbss_new <- yrbss_data %>% 
-  mutate(grade = factor(grade, levels = c("9th", "10th", "11th", "12th"))) %>%
+yrbss_new <- yrbss_data |> 
+  mutate(grade = factor(grade, levels = c("9th", "10th", "11th", "12th"))) |>
   drop_na(grade)
 
 ggplot(yrbss_new) +
@@ -2121,7 +2328,7 @@ ggplot(yrbss_new) +
 ::: {.column width="35%"}
 -   One of the most powerful ways to change a visualization is by *faceting*.
     -   We can make multiple plots stratifying by a categorical variable.
--   To do this, we have to add the `facet_wrap()` command to our plot.
+-   To do this, we have to add the `facet_wrap()` function to our plot.
     -   We need to specify the variable to `facet_wrap` - `race4` by using the `vars()` function to specify it as a variable.
 :::
 
@@ -2195,12 +2402,12 @@ ggplot(yrbss_new) +
     -   we want to replace it with the average bmi across the entire data set.
 
 ```{r}
-yrbss_new <- yrbss_data %>%
+yrbss_new <- yrbss_data |>
   mutate(bmi_filled =
            replace_na(bmi,
                       mean(bmi, na.rm = TRUE)))           
-yrbss_new %>% 
-  select(contains("bmi")) %>% 
+yrbss_new |> 
+  select(contains("bmi")) |> 
   tail()
 ```
 
@@ -2208,10 +2415,10 @@ yrbss_new %>%
     -   Here we replace missingness in the `grade` column with `unknown`:
 
 ```{r}
-yrbss_new <- yrbss_new %>%
+yrbss_new <- yrbss_new |>
     mutate(gradefilled = replace_na(grade, "unknown"))
 
-yrbss_new %>% 
+yrbss_new |> 
   tabyl(gradefilled, grade)
 ```
 
@@ -2227,7 +2434,7 @@ yrbss_new %>%
 |-------------------------------------|--------------------|-----------------|
 | Run code in qmd (or script)         | cmd + enter        | ctrl + enter    |
 | `<-`                                | option + -         | alt + -         |
-| interrupt currently running command | esc                | esc             |
+| interrupt currently running code    | esc                | esc             |
 | keyboard shortcut help              | option + shift + k | alt + shift + k |
 
  
