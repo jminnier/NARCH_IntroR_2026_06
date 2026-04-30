@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Getting Started in R and RStudio",
     "section": "",
-    "text": "Welcome to the BERD workshop Getting Started in R and RStudio!\n\nPart 1: Thursday, April 30, 2:00 to 3:30 p.m.\nPart 2 : Monday, May 11 , 2:00 to 3:30 p.m.\n\nSee the About page for information about the workshop.\n\nR & RStudio installation instructions\n\n\nOpen files for today’s workshop\n\nDownload zipped folder of workshop files (link)\n\nThe link takes you to a GitHub page. To the right, select the Download raw file option and save the file to your computer.\nExtract zipped file\n\nDo you have a PC? Need to right click the .zip file and select EXTRACT ALL\nDo you have a Mac? Just double click the .zip file and it will extract the files automatically.\n\n\nOpen RStudio by double-clicking on the file R_code_Intro_BERD_2026_04.Rproj that is in the unzipped folder you downloaded.\n\nIf you already you RStudio open, this will open a new independent session of RStudio.\n\nWant to view the slides on your own computer?\n\nYou have two options.\n\nThe “slide” view that will be presented during the workshop (link)\nOr, view the slides’ content as a webpage (link)\n\n\nIf you want to post questions outside of the chat (such as to include screenshots), use this Google Doc."
+    "text": "Part 1: Thursday, April 30, 2:00 to 3:30 p.m.\nPart 2 : Monday, May 11 , 2:00 to 3:30 p.m.\n\nSee the About page for information about the workshop.\n\nR & RStudio installation instructions"
   },
   {
     "objectID": "about.html",
@@ -2819,5 +2819,19 @@
     "title": "Code for Getting Started in R and RStudio",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nGrolemund, Garrett. 2014. Hands-on Programming with R. O’Reilly. https://rstudio-education.github.io/hopr/↩︎"
+  },
+  {
+    "objectID": "index.html#welcome-to-the-berd-workshop-getting-started-in-r-and-rstudio",
+    "href": "index.html#welcome-to-the-berd-workshop-getting-started-in-r-and-rstudio",
+    "title": "Getting Started in R and RStudio",
+    "section": "",
+    "text": "Part 1: Thursday, April 30, 2:00 to 3:30 p.m.\nPart 2 : Monday, May 11 , 2:00 to 3:30 p.m.\n\nSee the About page for information about the workshop.\n\nR & RStudio installation instructions"
+  },
+  {
+    "objectID": "index.html#open-files-for-todays-workshop",
+    "href": "index.html#open-files-for-todays-workshop",
+    "title": "Getting Started in R and RStudio",
+    "section": "Open files for today’s workshop",
+    "text": "Open files for today’s workshop\n\nDownload a zipped folder of workshop files (link)\n\nThe link takes you to a GitHub page.\n\nTo the right, select the Download raw file option and save the file to your computer.\n\nExtract zipped file\n\nDo you have a PC? Need to right click the .zip file and select EXTRACT ALL\nDo you have a Mac? Just double click the .zip file and it will extract the files automatically.\n\n\nOpen RStudio by double-clicking on the file R_code_Intro_BERD_2026_04.Rproj that is in the unzipped folder you downloaded.\n\nIf you already you RStudio open, this will open a new independent session of RStudio.\n\nWant to view the slides on your own computer?\n\nYou have two options.\n\nThe “slide” view that will be presented during the workshop (link)\nOr, view the slides’ content as a webpage (link)\n\n\nIf you want to post questions outside of the chat (such as to include screenshots), use this Google Doc."
   }
 ]

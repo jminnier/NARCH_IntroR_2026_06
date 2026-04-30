@@ -7,7 +7,7 @@ date: "04/30/2026"
 
 
 
-**Welcome to the BERD workshop *Getting Started in R and RStudio*!**
+## *Welcome* to the BERD workshop Getting Started in R and RStudio!
 
 -   Part 1: Thursday, April 30, 2:00 to 3:30 p.m.
 -   Part 2 : Monday, May 11 , 2:00 to 3:30 p.m.
@@ -18,10 +18,11 @@ See the [About](about.qmd) page for information about the workshop.
 -   [R & RStudio installation instructions](https://ohsu-octri-berd.github.io/R_RStudio_Installation/){target="_blank"}
 
 
-# Open files for today's workshop
+## Open files for today's workshop
 
-1.  Download zipped **folder** of workshop files ([link](https://github.com/OHSU-OCTRI-BERD/R_Intro_BERD_2026_04/blob/main/docs/R_code_Intro_BERD_2026_04.zip){target="_blank"})
-    -   The [link](https://github.com/OHSU-OCTRI-BERD/R_Intro_BERD_2026_04/blob/main/docs/R_code_Intro_BERD_2026_04.zip){target="_blank"} takes you to a GitHub page. To the right, select the Download raw file option and save the file to your computer.
+1.  Download a **zipped folder** of workshop files ([link](https://github.com/OHSU-OCTRI-BERD/R_Intro_BERD_2026_04/blob/main/docs/R_code_Intro_BERD_2026_04.zip){target="_blank"})
+    -   The [link](https://github.com/OHSU-OCTRI-BERD/R_Intro_BERD_2026_04/blob/main/docs/R_code_Intro_BERD_2026_04.zip){target="_blank"} takes you to a GitHub page. 
+        -   To the right, select the Download raw file option and save the file to your computer.
     -   Extract zipped file
         -   **Do you have a PC? Need to right click the  .zip file and select EXTRACT ALL**
         -   Do you have a Mac? Just double click the .zip file and it will extract the files automatically.
