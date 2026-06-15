@@ -2,12 +2,23 @@
 
 ## What this is
 
-A [Quarto](https://quarto.org) **website** for the workshop *"Getting Started in R and RStudio"*,
-taught by Jessica Minnier & Meike Niederhausen (OHSU OCTRI-BERD). It is a two-part
-interactive intro-to-R workshop for attendees with no prior experience.
+A [Quarto](https://quarto.org) **website** for the two-day course
+*"Data Wrangling & Summarizing in R"*, taught by Jessica Minnier, PhD, through
+**NW NARCH** (Northwest Native American Research Centers for Health). It is an
+intro-to-R course for trainees with no prior experience. Much of the course was
+co-developed with **Meike Niederhausen**, who authored a large portion of the slides
+(she is acknowledged in the slides and About page but is not the NARCH instructor of record).
 
-This repo is the **NARCH June 2026** offering, adapted from the earlier BERD April 2026
-version (some file/link names still reference `BERD_2026_04`).
+- **Part 1:** Thursday, June 18, 2026, 9:00 a.m.–12:00 p.m. (Pacific)
+- **Part 2:** Friday, June 19, 2026, 9:00 a.m.–12:00 p.m. (Pacific)
+- **Location:** Morrison Meeting Room, Residence Inn Portland Downtown/RiverPlace, Portland, OR
+- **Contact:** Dr. Minnier, minnier@ohsu.edu
+- **Published site:** https://jminnier.github.io/NARCH_IntroR_2026_06/ (GitHub Pages from `docs/`)
+
+This repo was adapted from the earlier OCTRI-BERD April 2026 workshop. The displayed
+workshop content references NARCH; a few legacy `berd` references remain only as
+citations of other/past workshops (BSTA 526 links, the Quarto_BERD_2025 workshop, the
+ggplot source slides) and are intentionally kept.
 
 ## Build / render
 
@@ -22,14 +33,13 @@ version (some file/link names still reference `BERD_2026_04`).
 | File | Purpose |
 |------|---------|
 | `index.qmd` | Home page — workshop dates, download links, setup instructions |
-| `about.qmd` | Abstract and workshop description |
-| `slides_R_berd_2026.qmd` | The **revealjs** slide deck presented during the workshop |
-| `slides_html_R_berd_2026.qmd` | Same slide content rendered as a scrollable **HTML webpage** |
-| `code_Rintro_narch_2026.qmd` | Current workshop code-along document (NARCH 2026 version) |
-| `code_Rintro_berd_2026.qmd` | Prior BERD version of the code-along (being phased out) |
+| `about.qmd` | Abstract, learning objectives, logistics |
+| `slides_R_narch_2026.qmd` | The **revealjs** slide deck presented during the workshop |
+| `slides_html_R_narch_2026.qmd` | Same slide content rendered as a scrollable **HTML webpage** |
+| `code_Rintro_narch_2026.qmd` | Workshop code-along document (the website's rendered copy) |
 | `solutions_practice.qmd` | Solutions to practice exercises |
 
-Note: `slides_R_berd_2026.qmd` and `slides_html_R_berd_2026.qmd` share the same body
+Note: `slides_R_narch_2026.qmd` and `slides_html_R_narch_2026.qmd` share the same body
 content but toggle the `format:` block (revealjs vs html). Keep their content in sync.
 
 ## Layout
@@ -38,7 +48,20 @@ content but toggle the `format:` block (revealjs vs html). Keep their content in
 - `image/` — figures and screenshots used in slides/pages.
 - `output/` — generated output artifacts.
 - `docs/` — **rendered site output** (do not hand-edit; regenerate with `quarto render`).
-  Includes `R_code_Intro_BERD_2026_04.zip`, the bundle of workshop files attendees download.
+
+## Student download zip
+
+`R_code_Intro_NARCH_2026_06.zip` is the bundle attendees download from `index.qmd`.
+It is **built from the sibling folder `../NARCH_IntroR_2026_06_code/`** (the student
+working materials: the `.Rproj`, `code_Rintro_narch_2026.qmd`, `solutions_practice.qmd`,
+`data/`, `output/` — excluding `.Rproj.user/`, `.DS_Store`, `.Rhistory`, and `test_quarto.*`).
+
+The zip lives at the **website root** and is declared under `project.resources` in
+`_quarto.yml`, so `quarto render` copies it into `docs/`. This matters: a full
+`quarto render` otherwise **deletes** unrecognized files from `docs/`. To refresh the
+zip after editing the code folder, rebuild it at the website root (folder-rooted so it
+extracts to `R_code_Intro_NARCH_2026_06/`) and re-render. The home-page download link
+points at `docs/R_code_Intro_NARCH_2026_06.zip` in the GitHub repo.
 
 ## Styling
 

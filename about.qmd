@@ -1,20 +1,37 @@
 ---
 title: "About"
 pagetitle: "About"
-institute: "OHSU OCTRI-BERD"
-author: "Jessica Minnier, Meike Niederhausen"
-date: "04/30/2026"
+institute: "NW NARCH"
+author: "Jessica Minnier"
+date: "06/18/2026"
 ---
 
--   This workshop is a part of the OCTRI Research Forum seminars on [BERD](https://www.ohsu.edu/octri/biostatistics-epidemiology-and-research-design){target="_blank"}-Informatics topics. 
--   For past workshops and a link of the recording that will posted there, see the [OCTRI Research Forum](https://www.ohsu.edu/octri/octri-research-forum-your-monthly-clinical-and-translational-research-event#accordion-384136-2){target="_blank"} webpage.
+-   This two-day course is offered through [NW NARCH](https://nwnarch.instructure.com/){target="_blank"} (Northwest Native American Research Centers for Health).
+-   **Instructor:** Jessica Minnier, PhD
+-   **Location:** Morrison Meeting Room, Residence Inn Portland Downtown/RiverPlace (2115 S River Pkwy, Portland, OR 97201)
+-   Questions about this course? Please contact Dr. Minnier, [minnier@ohsu.edu](mailto:minnier@ohsu.edu).
+
+::: {.callout-note appearance="simple"}
+Much of this course was co-developed with **Meike Niederhausen**, who authored a large portion of the course slides and materials.
+:::
 
 ## Abstract
 
-In this two -part interactive workshop, we will introduce the freely available statistical software programs R and RStudio to attendees with no prior experience. We will cover how to use RStudio to write and run code, introduce data structure types, and demonstrate commands for working with data: loading, viewing, summarizing, plotting, cleaning, and saving. You will learn basic R data wrangling and plotting principles, and how to
-use them to create high-quality reproducible documents to present your work.
+In this two-day course, we will introduce the freely available statistical software programs R and RStudio to trainees with no prior experience. We will cover how to use RStudio to write and run code, introduce data structure types, and demonstrate commands for working with data: loading, viewing, summarizing, plotting, cleaning, and saving. You will learn basic R data wrangling and plotting principles, and how to use them to create high-quality reproducible documents to present your work.
 
-No prior experience in R or RStudio is necessary. Installation materials will be circulated ahead of Part 1. We encourage you to bring a laptop with R and RStudio installed. For installation assistance, please join at 1:30 p.m. (30 minutes early) to Part 1 on April 30.
+## Learning objectives
 
--   Part 1: Thursday, April 30, 2:00 to 3:30 p.m.
--   Part 2 : Monday, May 11 , 2:00 to 3:30 p.m.
+-   Learn the fundamentals of how to use R and RStudio
+-   Load data
+-   Summarize data
+-   Visualize data
+-   Clean and manipulate data ready for analyses
+-   Export data and summary tables
+-   Create reproducible documents to present your work
+
+## Logistics
+
+No prior experience in R or RStudio is necessary. You will need access to R and RStudio before this course — please use the [installation instructions](https://ohsu-octri-berd.github.io/R_RStudio_Installation/){target="_blank"} to install both on your laptop before class. There will be an in-person help session immediately before class, 8:30–9:00 a.m. in the classroom on Thursday. If you are unable to install the software on your computer, you can sign up for a free [Posit Cloud account](https://posit.cloud/plans/free){target="_blank"} and run R on the web during the workshop.
+
+-   Part 1: Thursday, June 18, 2026, 9:00 a.m. to 12:00 p.m. (Pacific)
+-   Part 2: Friday, June 19, 2026, 9:00 a.m. to 12:00 p.m. (Pacific)

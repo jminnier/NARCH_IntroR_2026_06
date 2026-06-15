@@ -1,16 +1,17 @@
 ---
-title: "Getting Started in R and RStudio"
-institute: "OHSU OCTRI-BERD"
-author: "Jessica Minnier, Meike Niederhausen"
-date: "04/30/2026"
+title: "Data Wrangling & Summarizing in R"
+institute: "NW NARCH"
+author: "Jessica Minnier"
+date: "06/18/2026"
 ---
 
 
 
-## *Welcome* to the BERD workshop Getting Started in R and RStudio!
+## *Welcome* to the NARCH workshop Data Wrangling & Summarizing in R!
 
--   Part 1: Thursday, April 30, 2:00 to 3:30 p.m.
--   Part 2 : Monday, May 11 , 2:00 to 3:30 p.m.
+-   Part 1: Thursday, June 18, 2026, 9:00 a.m. to 12:00 p.m. (Pacific)
+-   Part 2: Friday, June 19, 2026, 9:00 a.m. to 12:00 p.m. (Pacific)
+-   Location: Morrison Meeting Room, Residence Inn Portland Downtown/RiverPlace (2115 S River Pkwy, Portland, OR 97201)
 
 See the [About](about.qmd) page for information about the workshop.
 
@@ -20,21 +21,21 @@ See the [About](about.qmd) page for information about the workshop.
 
 ## Open files for today's workshop
 
-1.  Download a **zipped folder** of workshop files ([link](https://github.com/OHSU-OCTRI-BERD/R_Intro_BERD_2026_04/blob/main/docs/R_code_Intro_BERD_2026_04.zip){target="_blank"})
-    -   The [link](https://github.com/OHSU-OCTRI-BERD/R_Intro_BERD_2026_04/blob/main/docs/R_code_Intro_BERD_2026_04.zip){target="_blank"} takes you to a GitHub page. 
+1.  Download a **zipped folder** of workshop files ([link](https://github.com/jminnier/NARCH_IntroR_2026_06/blob/main/docs/R_code_Intro_NARCH_2026_06.zip){target="_blank"})
+    -   The [link](https://github.com/jminnier/NARCH_IntroR_2026_06/blob/main/docs/R_code_Intro_NARCH_2026_06.zip){target="_blank"} takes you to a GitHub page. 
         -   To the right, select the Download raw file option and save the file to your computer.
     -   Extract zipped file
         -   **Do you have a PC? Need to right click the  .zip file and select EXTRACT ALL**
         -   Do you have a Mac? Just double click the .zip file and it will extract the files automatically.
     
 
-2.  [**Open RStudio by double-clicking on the file**]{style="color:darkorange"} `R_code_Intro_BERD_2026_04.Rproj` that is in the unzipped folder you downloaded.
+2.  [**Open RStudio by double-clicking on the file**]{style="color:darkorange"} `R_code_Intro_NARCH_2026_06.Rproj` that is in the unzipped folder you downloaded.
     -   *If you already you RStudio open, this will open a new independent session of RStudio.* 
 
 3.  Want to view the slides on your own computer? 
     -   You have two options.
-        1.    The "slide" view that will be presented during the workshop ([link](slides_R_berd_2026.qmd){target="_blank"})
-        2.    Or, view the slides' content as a webpage ([link](slides_html_R_berd_2026.qmd){target="_blank"})
+        1.    The "slide" view that will be presented during the workshop ([link](slides_R_narch_2026.qmd){target="_blank"})
+        2.    Or, view the slides' content as a webpage ([link](slides_html_R_narch_2026.qmd){target="_blank"})
 
 4.  If you want to post questions outside of the chat (such as to include screenshots), use this [Google Doc](https://docs.google.com/document/d/1oThowPaGP32-iheXAZwJHYgZHgTJRLsQv-zrUkp5KJA/edit?usp=sharing){target="_blank"}.
 
@@ -42,7 +43,7 @@ See the [About](about.qmd) page for information about the workshop.
 ### Don't have RStudio installed?
 
 -   If you don't have RStudio installed, you can work through the files using Posit Cloud
-    -   Create a [free Posit Cloud account](https://login.posit.cloud/login){target="_blank"}.
+    -   Create a [free Posit Cloud account](https://posit.cloud/plans/free){target="_blank"}.
     -   Once you have a Posit account, go to [https://posit.cloud/content/12399962](https://posit.cloud/content/12399962){target="_blank"}.
     
     

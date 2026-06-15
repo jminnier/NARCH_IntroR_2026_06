@@ -1,9 +1,13 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - "*.qmd"
+  resources:
+    - R_code_Intro_NARCH_2026_06.zip
 
 website:
-  title: "Getting Started in R and RStudio"
+  title: "Data Wrangling & Summarizing in R"
   navbar:
     left:
       - href: index.qmd

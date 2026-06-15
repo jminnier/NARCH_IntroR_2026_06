@@ -1,9 +1,9 @@
 ---
 title: "Practice Solutions"
-subtitle: "Getting Started in R and Rstudio"
-institute: "OHSU OCTRI-BERD"
-author: "Jessica Minnier, Meike Niederhausen"
-date: "04/30/2026"
+subtitle: "Data Wrangling & Summarizing in R"
+institute: "NW NARCH"
+author: "Jessica Minnier"
+date: "06/18/2026"
 format: 
   html:
     link-external-newwindow: true

@@ -2,18 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Jessica Minnier, Meike Niederhausen">
-<meta name="dcterms.date" content="2026-04-30">
+<meta name="author" content="Jessica Minnier">
+<meta name="dcterms.date" content="2026-06-18">
 
-<title>Getting Started in R and RStudio</title>
+<title>Data Wrangling &amp; Summarizing in R</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -37,14 +34,15 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="./">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-158031087360bce0ff56dc785ce39e06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-5b4ad623e5705c0698d39aec6f10cf02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -84,8 +82,10 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Getting Started in R and RStudio</span>
+    <span class="navbar-title">Data Wrangling &amp; Summarizing in R</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -118,7 +118,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#welcome-to-the-berd-workshop-getting-started-in-r-and-rstudio" id="toc-welcome-to-the-berd-workshop-getting-started-in-r-and-rstudio" class="nav-link active" data-scroll-target="#welcome-to-the-berd-workshop-getting-started-in-r-and-rstudio"><em>Welcome</em> to the BERD workshop Getting Started in R and RStudio!</a></li>
+  <li><a href="#welcome-to-the-narch-workshop-data-wrangling-summarizing-in-r" id="toc-welcome-to-the-narch-workshop-data-wrangling-summarizing-in-r" class="nav-link active" data-scroll-target="#welcome-to-the-narch-workshop-data-wrangling-summarizing-in-r"><em>Welcome</em> to the NARCH workshop Data Wrangling &amp; Summarizing in R!</a></li>
   <li><a href="#open-files-for-todays-workshop" id="toc-open-files-for-todays-workshop" class="nav-link" data-scroll-target="#open-files-for-todays-workshop">Open files for today’s workshop</a>
   <ul class="collapse">
   <li><a href="#dont-have-rstudio-installed" id="toc-dont-have-rstudio-installed" class="nav-link" data-scroll-target="#dont-have-rstudio-installed">Don’t have RStudio installed?</a></li>
@@ -131,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Getting Started in R and RStudio</h1>
+<h1 class="title">Data Wrangling &amp; Summarizing in R</h1>
 </div>
 
 
@@ -140,11 +140,11 @@ ul.task-list li input[type="checkbox"] {
   <div class="quarto-title-meta-heading">Affiliation</div>
   
     <div class="quarto-title-meta-contents">
-    <p class="author">Jessica Minnier, Meike Niederhausen </p>
+    <p class="author">Jessica Minnier </p>
   </div>
   <div class="quarto-title-meta-contents">
         <p class="affiliation">
-            OHSU OCTRI-BERD
+            NW NARCH
           </p>
       </div>
   </div>
@@ -155,7 +155,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 30, 2026</p>
+      <p class="date">June 18, 2026</p>
     </div>
   </div>
   
@@ -167,11 +167,12 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="welcome-to-the-berd-workshop-getting-started-in-r-and-rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="welcome-to-the-berd-workshop-getting-started-in-r-and-rstudio"><em>Welcome</em> to the BERD workshop Getting Started in R and RStudio!</h2>
+<section id="welcome-to-the-narch-workshop-data-wrangling-summarizing-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="welcome-to-the-narch-workshop-data-wrangling-summarizing-in-r"><em>Welcome</em> to the NARCH workshop Data Wrangling &amp; Summarizing in R!</h2>
 <ul>
-<li>Part 1: Thursday, April 30, 2:00 to 3:30 p.m.</li>
-<li>Part 2 : Monday, May 11 , 2:00 to 3:30 p.m.</li>
+<li>Part 1: Thursday, June 18, 2026, 9:00 a.m. to 12:00 p.m. (Pacific)</li>
+<li>Part 2: Friday, June 19, 2026, 9:00 a.m. to 12:00 p.m. (Pacific)</li>
+<li>Location: Morrison Meeting Room, Residence Inn Portland Downtown/RiverPlace (2115 S River Pkwy, Portland, OR 97201)</li>
 </ul>
 <p>See the <a href="./about.html">About</a> page for information about the workshop.</p>
 <ul>
@@ -181,9 +182,9 @@ ul.task-list li input[type="checkbox"] {
 <section id="open-files-for-todays-workshop" class="level2">
 <h2 class="anchored" data-anchor-id="open-files-for-todays-workshop">Open files for today’s workshop</h2>
 <ol type="1">
-<li>Download a <strong>zipped folder</strong> of workshop files (<a href="https://github.com/OHSU-OCTRI-BERD/R_Intro_BERD_2026_04/blob/main/docs/R_code_Intro_BERD_2026_04.zip" target="_blank">link</a>)
+<li>Download a <strong>zipped folder</strong> of workshop files (<a href="https://github.com/jminnier/NARCH_IntroR_2026_06/blob/main/docs/R_code_Intro_NARCH_2026_06.zip" target="_blank">link</a>)
 <ul>
-<li>The <a href="https://github.com/OHSU-OCTRI-BERD/R_Intro_BERD_2026_04/blob/main/docs/R_code_Intro_BERD_2026_04.zip" target="_blank">link</a> takes you to a GitHub page.
+<li>The <a href="https://github.com/jminnier/NARCH_IntroR_2026_06/blob/main/docs/R_code_Intro_NARCH_2026_06.zip" target="_blank">link</a> takes you to a GitHub page.
 <ul>
 <li>To the right, select the Download raw file option and save the file to your computer.</li>
 </ul></li>
@@ -193,7 +194,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Do you have a Mac? Just double click the .zip file and it will extract the files automatically.</li>
 </ul></li>
 </ul></li>
-<li><span style="color:darkorange"><strong>Open RStudio by double-clicking on the file</strong></span> <code>R_code_Intro_BERD_2026_04.Rproj</code> that is in the unzipped folder you downloaded.
+<li><span style="color:darkorange"><strong>Open RStudio by double-clicking on the file</strong></span> <code>R_code_Intro_NARCH_2026_06.Rproj</code> that is in the unzipped folder you downloaded.
 <ul>
 <li><em>If you already you RStudio open, this will open a new independent session of RStudio.</em></li>
 </ul></li>
@@ -201,8 +202,8 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>You have two options.
 <ol type="1">
-<li>The “slide” view that will be presented during the workshop (<a href="./slides_R_berd_2026.html" target="_blank">link</a>)</li>
-<li>Or, view the slides’ content as a webpage (<a href="./slides_html_R_berd_2026.html" target="_blank">link</a>)</li>
+<li>The “slide” view that will be presented during the workshop (<a href="./slides_R_narch_2026.html" target="_blank">link</a>)</li>
+<li>Or, view the slides’ content as a webpage (<a href="./slides_html_R_narch_2026.html" target="_blank">link</a>)</li>
 </ol></li>
 </ul></li>
 <li>If you want to post questions outside of the chat (such as to include screenshots), use this <a href="https://docs.google.com/document/d/1oThowPaGP32-iheXAZwJHYgZHgTJRLsQv-zrUkp5KJA/edit?usp=sharing" target="_blank">Google Doc</a>.</li>
@@ -212,7 +213,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>If you don’t have RStudio installed, you can work through the files using Posit Cloud
 <ul>
-<li>Create a <a href="https://login.posit.cloud/login" target="_blank">free Posit Cloud account</a>.</li>
+<li>Create a <a href="https://posit.cloud/plans/free" target="_blank">free Posit Cloud account</a>.</li>
 <li>Once you have a Posit account, go to <a href="https://posit.cloud/content/12399962" target="_blank">https://posit.cloud/content/12399962</a>.</li>
 </ul></li>
 </ul>
