@@ -21,16 +21,15 @@ See the [About](about.qmd) page for information about the workshop.
 
 ## Open files for today's workshop
 
-1.  Download a **zipped folder** of workshop files ([link](https://github.com/jminnier/NARCH_IntroR_2026_06/blob/main/docs/R_code_Intro_NARCH_2026_06.zip){target="_blank"})
-    -   The [link](https://github.com/jminnier/NARCH_IntroR_2026_06/blob/main/docs/R_code_Intro_NARCH_2026_06.zip){target="_blank"} takes you to a GitHub page. 
-        -   To the right, select the Download raw file option and save the file to your computer.
+1.  Download a **zipped folder** of workshop files ([link](http://jessicaminnier.com/NARCH_IntroR_2026_06/R_code_Intro_NARCH_2026_06.zip))
+    -   Clicking the [link](http://jessicaminnier.com/NARCH_IntroR_2026_06/R_code_Intro_NARCH_2026_06.zip) will automatically download the `.zip` file to your computer (depending on your browser).
     -   Extract zipped file
         -   **Do you have a PC? Need to right click the  .zip file and select EXTRACT ALL**
         -   Do you have a Mac? Just double click the .zip file and it will extract the files automatically.
     
 
 2.  [**Open RStudio by double-clicking on the file**]{style="color:darkorange"} `R_code_Intro_NARCH_2026_06.Rproj` that is in the unzipped folder you downloaded.
-    -   *If you already you RStudio open, this will open a new independent session of RStudio.* 
+    -   *If you already have RStudio open, this will open a new independent session of RStudio.* 
 
 3.  Want to view the slides on your own computer? 
     -   You have two options.

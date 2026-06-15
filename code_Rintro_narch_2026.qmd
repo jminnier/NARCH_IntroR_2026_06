@@ -55,7 +55,7 @@ For optimized viewing of content, please see the [slides](https://jminnier.githu
 
 ## Overview
 
-### Part 1: 4/30/2026
+### Part 1:
 
 -   Intro to R & RStudio
 -   Quarto documents & code chunks
@@ -69,7 +69,7 @@ For optimized viewing of content, please see the [slides](https://jminnier.githu
     -   Categorical: barplots
 -   Missing data summary
 
-### Part 2: 5/11/2026
+### Part 2: 
 
 -   Data wrangling
     -   Sorting data
