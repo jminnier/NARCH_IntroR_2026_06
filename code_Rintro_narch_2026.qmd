@@ -590,6 +590,32 @@ yrbss_data |>
   gt()
 ```
 
+## Your turn: summarize
+
+::: {.panel-tabset}
+
+### Try it
+
+Using `yrbss_data`:
+
+-   Get the **common** summary statistics of `bmi` and `stweight`.
+-   Then get those same statistics **for each `grade`** (hint: `group_by()`).
+
+### Solution
+
+```{r}
+# common summary stats of bmi and stweight
+yrbss_data |>
+  get_summary_stats(bmi, stweight, type = "common")
+
+# the same, stratified by grade
+yrbss_data |>
+  group_by(grade) |>
+  get_summary_stats(bmi, stweight, type = "common")
+```
+
+:::
+
 # Two pipes in R: `|>` vs `%>%`
 
 -   Both pipes are used to write code from **left to right**
@@ -935,6 +961,31 @@ ggplot(data = yrbss_data,
     -   lower alphas are more transparent
 
 -   See ggplot webpage [Colour related aesthetics: colour, fill, and alpha](https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html){target="_blank"} for more information
+
+## Your turn: plots
+
+::: {.panel-tabset}
+
+### Try it
+
+Using `yrbss_data`:
+
+-   Make a **boxplot** of `bmi` stratified by `grade`.
+-   Make a **scatterplot** of `bmi` vs `stweight`, color-coded by `sex`.
+
+### Solution
+
+```{r}
+# boxplot of bmi by grade
+ggplot(yrbss_data, aes(x = bmi, y = grade)) +
+  geom_boxplot()
+
+# scatterplot of bmi vs stweight, colored by sex
+ggplot(yrbss_data, aes(x = stweight, y = bmi, color = sex)) +
+  geom_point(alpha = .2)
+```
+
+:::
 
 # Visualizing categorical variables
 
@@ -1331,6 +1382,31 @@ yrbss_data |>
 ### Think about it:
 
 Which of the AND vs. OR code blocks will return a larger number of participants?
+
+## Your turn: filter()
+
+::: {.panel-tabset}
+
+### Try it
+
+Using `yrbss_data`:
+
+-   Keep only participants who are `Female` **and** in `12th` grade.
+-   Then keep only participants who are in `9th` grade **or** have `bmi` greater than 30.
+
+### Solution
+
+```{r}
+# AND: a comma (or &) inside filter()
+yrbss_data |>
+  filter(sex == "Female", grade == "12th")
+
+# OR: the | operator
+yrbss_data |>
+  filter(grade == "9th" | bmi > 30)
+```
+
+:::
 
 ## More filter examples
 
@@ -1963,6 +2039,31 @@ yrbss_new <- yrbss_new |>
     mutate(
       gradefilled = replace_na(grade, "unknown"))
 ```
+
+## Your turn: replace_na()
+
+::: {.panel-tabset}
+
+### Try it
+
+Using `yrbss_new`:
+
+-   Create a new variable `stweight_filled` that replaces missing `stweight` values with the **median** `stweight`.
+-   Compare `stweight` and `stweight_filled` to check your work.
+
+### Solution
+
+```{r}
+yrbss_new <- yrbss_new |>
+  mutate(stweight_filled = replace_na(stweight, median(stweight, na.rm = TRUE)))
+
+# check: the filled version has no missing values
+yrbss_new |>
+  select(stweight, stweight_filled) |>
+  get_summary_stats(type = "common")
+```
+
+:::
 
 # More data visualizations with `{ggplot2}`
 
