@@ -166,7 +166,7 @@ html output\
 
 # Basic Quarto example
 
-![[Artwork from "Hello, Quarto" keynote by Julia Lowndes and Mine Çetinkaya-Rundel, presented at RStudio Conference 2022. Illustrated by Allison Horst.](https://allisonhorst.com/cetinkaya-rundel-lowndes-quarto-keynote){target="_blank"}](image/horst_quarto_moon_penguins.png){fig-align="center"}
+![[Artwork from "Hello, Quarto" keynote by Julia Lowndes and Mine Ãetinkaya-Rundel, presented at RStudio Conference 2022. Illustrated by Allison Horst.](https://allisonhorst.com/cetinkaya-rundel-lowndes-quarto-keynote){target="_blank"}](image/horst_quarto_moon_penguins.png){fig-align="center"}
 
 ## 1. Create a Quarto file (`.qmd`)
 
@@ -341,6 +341,87 @@ Note that a code chunks start with ```` ```{r} ```` and ends with ```` ``` ````.
 
 ![](image/code_chunk_insert_visual.png)
 
+# R building blocks
+
+A few pieces of R you'll use all day. Don't worry about memorizing them -- you'll see them over and over.
+
+## Objects and `<-`
+
+-   An **object** is a named box that stores something: a number, a dataset, a result -- anything.
+-   We create objects with the **assignment arrow `<-`** (keyboard shortcut: option/alt + `-`):
+
+```{r}
+my_number <- 10   # store 10 in an object called my_number
+my_number         # type the name to see what's inside
+```
+
+-   The object now shows up in your **Environment** tab (top right).
+
+## Functions and arguments
+
+-   A **function** *does something*. You run it by writing its name followed by parentheses:
+    -   `function_name(argument1, argument2, ...)`
+-   The values inside the parentheses are the **arguments**: they tell the function what to work on and how.
+
+```{r}
+sqrt(16)            # sqrt() takes one argument
+round(3.14159, 1)   # round() takes two: the number, and the digits to keep
+```
+
+-   Arguments often have **names**, e.g. `round(3.14159, digits = 1)`.
+
+## `c()`: combine values
+
+-   `c()` ("combine") glues several values into a single **vector** (a list of values of the same type).
+-   You'll use it constantly -- for example, to list the levels of a factor later today:
+
+```{r}
+c(1, 2, 3)
+c("9th", "10th", "11th", "12th")
+```
+
+## `$`: grab one column from a dataset
+
+-   Use `dataset$column_name` to pull a single column out of a dataset:
+
+```{r}
+#| eval: false
+# (once we've loaded a dataset, e.g. toy_data)
+toy_data$age        # the age column of toy_data
+class(toy_data$age) # what type is that column?
+```
+
+-   We'll mostly work on whole datasets with the tidyverse, but `$` is handy for a quick peek at one column.
+
+# Getting help & reading errors
+
+## Getting help
+
+-   Put a `?` before a function name to open its help page (in the Help tab):
+
+```{r}
+#| eval: false
+?mean        # help page for the mean() function
+?read_excel
+```
+
+-   Other great resources:
+    -   the **cheatsheets** (Help menu > Cheat Sheets, or [posit.co/resources/cheatsheets](https://posit.co/resources/cheatsheets/){target="_blank"})
+    -   [*R for Data Science (2e)*](https://r4ds.hadley.nz/){target="_blank"}, a free beginner-friendly book
+    -   a search engine: paste the error message in!
+
+## Reading an error message
+
+-   A red message in the console is **normal**: it's R telling you what went wrong, not a sign you failed.
+-   Two of the most common beginner errors:
+
+| Message | Usually means |
+|---------|---------------|
+| `object 'x' not found` | A name R doesn't know: a typo, or you haven't created/loaded it yet |
+| `could not find function "..."` | The function's **package isn't loaded**: run `library(thepackage)` |
+
+-   Check first: spelling, capitalization, matching `()` and `""`, and whether you ran the earlier code (objects and `library()` calls) in this session.
+
 # R packages: installing & loading
 
 ![](image/tidyverse_celestial.jpg){fig-align="center"}
@@ -511,6 +592,14 @@ library(readxl)  # part of tidyverse, but not the tidyverse core
 -   What are the variable types in this dataset?
 :::
 
+## Open the `.Rproj` so file paths work
+
+-   Our code loads data with a **relative path**: `read_excel("data/toy_data.xlsx")`.
+    -   This means "find the `data` folder *inside my current working folder*."
+-   When you open the workshop by **double-clicking the `.Rproj` file**, RStudio sets that working folder for you, so `"data/..."` points to the right place.
+-   If you see an error like `cannot open file 'data/toy_data.xlsx': No such file or directory`, it almost always means RStudio isn't pointed at the project folder.
+    -   Fix: open the `.Rproj` file (at the top of the unzipped workshop folder), then re-run your code.
+
 ## Import data into R
 
 
@@ -659,6 +748,8 @@ Use R code to answer the following questions.
 # library(readxl)
 # note we are saving the data from the Excel file in our environment 
 # with the object name yrbss_data
+# yrbss_demo uses blank cells for missing, which read_excel() already reads as NA,
+# so (unlike toy_data) we do not need the na = "NA" argument here:
 yrbss_data <- read_excel("data/yrbss_demo.xlsx")
 ```
 
@@ -1700,7 +1791,7 @@ Click [here](https://www.datamentor.io/r-programming/operator/){target="_blank"}
 
 ### New since Feb 2026: `filter_out()`
 
--   `filter_out()` requires `{dplyr}` 1.2.0 (or later version)
+-   `filter_out()` requires **`{dplyr}` 1.2.0 or later**. If you get `could not find function "filter_out"`, update with `update.packages()` (or `install.packages("dplyr")`) and re-run `library(tidyverse)`.
 
 ```{r}
 yrbss_data |>
@@ -1967,7 +2058,7 @@ Perform some subsetting functions on the `yrbss_data` data:
 
 4.  Arrange the data by bmi, starting with the highest value and ending with the least value.
 
-5.  Save the resulting data set in the file `data/practice4_data.xslx`.
+5.  Save the resulting data set in the file `data/practice4_data.xlsx`.
 
 
 
@@ -2013,11 +2104,11 @@ Think of this like adding a formula in Excel to calculate the value of a new col
 
 ### Example 1
 
--   Convert the weights to kg, assuming `stweight` is in lbs
+-   Convert the weights from kg to lbs, since `stweight` is recorded in kilograms
 
 ```{r}
 yrbss_data |> 
-    mutate(weight_kg = stweight/2.205) |>
+    mutate(weight_lb = stweight*2.205) |>
     glimpse()
 ```
 
@@ -2035,14 +2126,14 @@ Since we haven't assigned this new "mutated" dataset to an object name, our work
 
 ### Example 2
 
-1.   Convert the weights to kg, assuming `stweight` is in lbs (same as in Ex 1)
+1.   Convert the weights from kg to lbs, since `stweight` is recorded in kilograms (same as in Ex 1)
 2.   Convert the weights to g, using the kg weights
 3.   Create a new dataset (`yrbss_new`) with the new variables
 
 ```{r}
 yrbss_new <- yrbss_data |> 
-    mutate(weight_kg = stweight/2.205,
-           weight_g = weight_kg*1000)
+    mutate(weight_lb = stweight*2.205,
+           weight_g = stweight*1000)
 
 glimpse(yrbss_new)
 ```
@@ -2053,16 +2144,16 @@ glimpse(yrbss_new)
 -   Notice how we can add multiple new columns within one `mutate()` function.
     -   We can also mutate using multiple columns.
     -   Here we have created two new weight variables in different scales
-    -   In the next *Practice time*, you will make a height variable from `bmi` and `weight_kg`
+    -   In the next *Practice time*, you will make a height variable from `bmi` and `stweight`
 
 ### Examine new columns
 
-Figure comparing the newly created `weight_kg` column to the original `stweight` column:
+Figure comparing the newly created `weight_lb` column to the original `stweight` column:
 
 ```{r}
 ggplot(yrbss_new) +
   aes(x = stweight, 
-      y = weight_kg) +
+      y = weight_lb) +
   geom_point()
 ```
 
@@ -2156,7 +2247,7 @@ yrbss_new |> tabyl(grade_fac2, grade_fac3) |> adorn_title()
 ### Replace `grade` with factor version
 
 -   Below we are doing something called *reassignment*:
-    -   We’re taking the previous values of our variable (`grade`),
+    -   Weâre taking the previous values of our variable (`grade`),
     -   doing something to them (making them a factor), and 
     -   then reassigning the variable `grade` to its new set of values.
 -   *I don't recommend replacing a variable with new values until you are 100% positive that your code is correct!!*
@@ -2190,7 +2281,7 @@ names(yrbss_new)
 
 # Practice time! (part 5)
 
-1.  Create a new variable `height` that calculates height based on `bmi` and `weight_kg`. Note the formula for BMI is weight/height\^2 (weight is in kilograms and height is in meters). Create a scatterplot of `bmi` vs `height`.
+1.  Create a new variable `height` that calculates height based on `bmi` and `stweight`. Note the formula for BMI is weight/height\^2 (weight is in kilograms and height is in meters). Create a scatterplot of `bmi` vs `height`.
 
 2.  Create a new factor variable `sex_fac` that orders the values of `sex` as Male, Female.
 
@@ -2548,9 +2639,9 @@ y
 
 From Garrett Grolemund's Prologue of his book *Hands-On Programming with R*[^1]:
 
-[^1]: Grolemund, Garrett. 2014. Hands-on Programming with R. O’Reilly. [https://rstudio-education.github.io/hopr/](https://rstudio-education.github.io/hopr/){target="_blank"}
+[^1]: Grolemund, Garrett. 2014. Hands-on Programming with R. OâReilly. [https://rstudio-education.github.io/hopr/](https://rstudio-education.github.io/hopr/){target="_blank"}
 
-> As you learn to program, you are going to get frustrated. You are learning a new language, and it will take time to become fluent. But frustration is not just natural, it’s actually a positive sign that you should watch for. Frustration is your brain’s way of being lazy; it’s trying to get you to quit and go do something easy or fun. If you want to get physically fitter, you need to push your body even though it complains. If you want to get better at programming, you’ll need to push your brain. Recognize when you get frustrated and see it as a good thing: you’re now stretching yourself. Push yourself a little further every day, and you’ll soon be a confident programmer.
+> As you learn to program, you are going to get frustrated. You are learning a new language, and it will take time to become fluent. But frustration is not just natural, itâs actually a positive sign that you should watch for. Frustration is your brainâs way of being lazy; itâs trying to get you to quit and go do something easy or fun. If you want to get physically fitter, you need to push your body even though it complains. If you want to get better at programming, youâll need to push your brain. Recognize when you get frustrated and see it as a good thing: youâre now stretching yourself. Push yourself a little further every day, and youâll soon be a confident programmer.
 
 ## Where are you in your R learning timeline?
 
@@ -2561,7 +2652,7 @@ From Garrett Grolemund's Prologue of his book *Hands-On Programming with R*[^1]:
 ::: {.panel-tabset}
 ### R Resources
 
--   [R for Data Science](https://r4ds.hadley.nz/){target="_blank"} book by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund
+-   [R for Data Science](https://r4ds.hadley.nz/){target="_blank"} book by Hadley Wickham, Mine Ãetinkaya-Rundel, and Garrett Grolemund
 -   [R Programming for Health Data Science](https://niederhausen.github.io/BSTA_526_W26/){target="_blank"} (BSTA 526) course webpage
 
 ### Quarto Resources
@@ -2573,7 +2664,7 @@ From Garrett Grolemund's Prologue of his book *Hands-On Programming with R*[^1]:
         -   Text formatting, headings, links, images, lists, tables, equations, diagrams, page breaks, keyboard shortcuts, and more!
     -   [Code blocks](https://quarto.org/docs/computations/r.html#code-blocks){target="_blank"} 
         -   [Code chunk options:](https://quarto.org/docs/computations/r.html#chunk-options){target="_blank"} 
--   Mine Çetinkaya-Rundel's [Quarto tip a day:](https://mine-cetinkaya-rundel.github.io/quarto-tip-a-day/){target="_blank"} 
+-   Mine Ãetinkaya-Rundel's [Quarto tip a day:](https://mine-cetinkaya-rundel.github.io/quarto-tip-a-day/){target="_blank"} 
 
 :::
 

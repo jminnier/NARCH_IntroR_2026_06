@@ -108,25 +108,27 @@ glimpse(yrbss_data)
 1.  Create a contingency table for `race4` and `race7`, with both percentages and counts. What is the difference between these two variables?
 
 ```{r}
-yrbss_data %>%
-  tabyl(race7, race4) %>%
-  adorn_percentages() %>%
-  adorn_pct_formatting() %>%
-  adorn_ns() %>%
-  adorn_title(placement = "combined") %>%
+yrbss_data |>
+  tabyl(race7, race4) |>
+  adorn_percentages() |>
+  adorn_pct_formatting() |>
+  adorn_ns() |>
+  adorn_title(placement = "combined") |>
   gt()
 ```
+
+`race4` groups race/ethnicity into 4 categories, while `race7` uses a finer 7-category breakdown. The table shows how each of the 7 `race7` groups maps into the 4 `race4` groups — `race4` is the coarser collapsed version of `race7`.
 
 ## 2
 
 2.  Create a contingency table for `race4` and `race7`, with both percentages and counts, stratified by `grade`.
 
 ```{r}
-yrbss_data %>%
-  tabyl(race7, race4, grade) %>%
-  adorn_percentages() %>%
-  adorn_pct_formatting() %>%
-  adorn_ns() %>%
+yrbss_data |>
+  tabyl(race7, race4, grade) |>
+  adorn_percentages() |>
+  adorn_pct_formatting() |>
+  adorn_ns() |>
   adorn_title(placement = "combined") # gt doesn't work here
 ```
 
@@ -137,11 +139,11 @@ yrbss_data %>%
 There are a couple of options to do this. I chose the five number summary option.
 
 ```{r}
-yrbss_data %>% 
+yrbss_data |> 
   get_summary_stats(
     bmi, stweight,
     type = c("five_number")
-    ) %>% 
+    ) |> 
   gt()
 ```
 
@@ -150,12 +152,12 @@ yrbss_data %>%
 4.  Calculate the minimum, median, and maximum BMI and weights of the participants in the YRBSS data, now stratified by age.
 
 ```{r}
-yrbss_data %>% 
-  group_by(age) %>% 
+yrbss_data |> 
+  group_by(age) |> 
   get_summary_stats(
     bmi, stweight,
     type = c("five_number")
-    ) %>% 
+    ) |> 
   gt()
 ```
 
@@ -231,23 +233,23 @@ Perform some subsetting functions on the `yrbss_data` data:
 
 ```{r}
 # first let's see what the categories look like
-yrbss_data %>%
+yrbss_data |>
   tabyl(grade)
 
 # now we filter with the "or" operator | on grade and then the "and" operator or comma on bmi
-yrbss_filtered <- yrbss_data %>%
+yrbss_filtered <- yrbss_data |>
   filter(grade == "9th" | grade == "10th", 
          bmi < 25
          )
 
 # check this worked
 nrow(yrbss_filtered)
-yrbss_filtered %>% 
-  group_by(grade) %>% 
+yrbss_filtered |> 
+  group_by(grade) |> 
   get_summary_stats(
     bmi,
     type = c("common")
-    ) %>% 
+    ) |> 
   gt()
 
 # Note that output only includes 9th & 10th grade
@@ -261,7 +263,7 @@ yrbss_filtered %>%
 ```{r}
 names(yrbss_filtered)
 
-yrbss_filtered2 <- yrbss_filtered %>% 
+yrbss_filtered2 <- yrbss_filtered |> 
   rename(ID = record, 
          weight = stweight)
 
@@ -273,7 +275,7 @@ names(yrbss_filtered2)
 3.  Use `select()` to keep only the columns that denote record, sex, grade, bmi, and the 2 renamed columns.
 
 ```{r}
-yrbss_filtered3 <- yrbss_filtered2 %>%
+yrbss_filtered3 <- yrbss_filtered2 |>
   select(ID, sex, grade, bmi, weight)
 
 # check:
@@ -285,7 +287,7 @@ glimpse(yrbss_filtered3)
 4.  Arrange the data by bmi, starting with the highest value and ending with the least value.
 
 ```{r}
-yrbss_filtered3 <- yrbss_filtered3 %>%
+yrbss_filtered3 <- yrbss_filtered3 |>
   arrange(desc(bmi))
 
 yrbss_filtered3
@@ -293,7 +295,7 @@ yrbss_filtered3
 
 ## 5
 
-5.  Save the resulting data set in the file `data/practice4_data.xslx`.
+5.  Save the resulting data set in the file `data/practice4_data.xlsx`.
 
 ```{r}
 write_xlsx(yrbss_filtered3, path = "data/practice4_data.xlsx")
@@ -301,58 +303,71 @@ write_xlsx(yrbss_filtered3, path = "data/practice4_data.xlsx")
 
 # Part 5
 
-*Note: code below is using `yrbss_data` instead of `yrbss_new`.*
+*Parts 5–7 build on `yrbss_new`, the dataset we created in the slides. We rebuild it here so this solutions file runs on its own:*
+
+```{r}
+#| label: build-yrbss-new
+# Rebuild yrbss_new from yrbss_data (mirrors the mutate/factor slides)
+yrbss_new <- yrbss_data |>
+  mutate(
+    weight_lb = stweight * 2.205,   # stweight is recorded in kg
+    weight_g  = stweight * 1000,
+    grade     = factor(grade, levels = c("9th", "10th", "11th", "12th"))
+  )
+```
 
 ## 1
 
-1.  Create a new variable `height` that calculates height based on `bmi` and `weight_kg`. Note the formula for BMI is weight/height\^2 (weight is in kilograms and height is in meters). Create a scatterplot of `bmi` vs `height`.
+1.  Create a new variable `height` that calculates height based on `bmi` and `stweight`. Note the formula for BMI is weight/height\^2 (weight is in kilograms and height is in meters). Create a scatterplot of `bmi` vs `height`.
+
+Rearranging BMI = weight/height\^2 gives height = sqrt(weight/BMI). Since `stweight` is already in kilograms, we use it directly:
 
 ```{r}
-yrbss_data <- yrbss_data %>% 
+yrbss_new <- yrbss_new |>
   mutate(height = sqrt(stweight/bmi))
 
-ggplot(yrbss_data, aes(x=height, y = bmi)) + 
+ggplot(yrbss_new, aes(x = height, y = bmi)) +
   geom_point()
 ```
+
+The heights are reasonable for high-school students (median ~ 1.68 m), a good sanity check that we used weight in kilograms.
 
 ## 2
 
 2.  Create a new factor variable `sex_fac` that orders the values of `sex` as Male, Female.
 
 ```{r}
-yrbss_data <- yrbss_data %>%
+yrbss_new <- yrbss_new |>
   mutate(sex_fac = factor(sex,
                           levels = c("Male", "Female")))
-         
-# check:
-glimpse(yrbss_data)
 
-yrbss_data %>% tabyl(sex_fac, sex)
+# check:
+glimpse(yrbss_new)
+
+yrbss_new |> tabyl(sex_fac, sex)
 ```
 
 # Part 6
 
-*Note: code below is using `yrbss_data` instead of `yrbss_new`.*
-
 ## 1
 
-1.  Create a new variable called `grade_num` in `yrbss_data` that converts `grade` to numeric.
+1.  Create a new variable called `grade_num` in `yrbss_new` that converts `grade` to numeric.
 
 ```{r}
-yrbss_data %>% tabyl(grade)
+yrbss_new |> tabyl(grade)
 
-yrbss_data <- yrbss_data %>% 
-  mutate(grade_num = 
+yrbss_new <- yrbss_new |>
+  mutate(grade_num =
            case_when(
-             grade == "10th" ~ 10, 
-             grade == "11th" ~ 11, 
-             grade == "12th" ~ 12, 
+             grade == "10th" ~ 10,
+             grade == "11th" ~ 11,
+             grade == "12th" ~ 12,
              grade == "9th" ~ 9))
 
 # check:
-yrbss_data %>% tabyl(grade, grade_num)
+yrbss_new |> tabyl(grade, grade_num)
 
-glimpse(yrbss_data)
+glimpse(yrbss_new)
 
 ```
 
@@ -361,9 +376,9 @@ glimpse(yrbss_data)
 2.  Create a new variable called `race_cat` that relabels `race4` to have shorter race category names: W (White), H/L (Hispanic/Latino), B/AA (Black or African American), Other (All other races). Make `race_cat` a factor variable with levels ordered by the size of the group in descending order.
 
 ```{r}
-yrbss_data %>% tabyl(race4) %>% arrange(desc(n))
+yrbss_new |> tabyl(race4) |> arrange(desc(n))
 
-yrbss_data <- yrbss_data %>%
+yrbss_new <- yrbss_new |>
   mutate(
     race_cat = case_when(
       race4 == "White" ~ "W",
@@ -376,25 +391,34 @@ yrbss_data <- yrbss_data %>%
 
 ```
 
+::: callout-tip
+Hardcoding the `levels` works here, but it breaks if the group sizes change. A more robust way to order a factor by frequency (largest group first) is `fct_infreq()` from `{forcats}` (a core tidyverse package):
+
+```{r}
+yrbss_new |>
+  mutate(race_cat2 = fct_infreq(race_cat)) |>
+  pull(race_cat2) |>
+  levels()
+```
+:::
+
 ## 3
 
 3.  Create a `tabyl` of the new variable `race_cat` and `race4` to check your work, including the ordering of the factors.
 
 ```{r}
 # Check:
-yrbss_data %>% tabyl(race4, race_cat) |> adorn_title()
+yrbss_new |> tabyl(race4, race_cat) |> adorn_title()
 ```
 
 # Part 7
-
-*Note: code below is using `yrbss_data` instead of `yrbss_new`.*
 
 ## 1
 
 1.  Create a barplot of `race4`, faceted by `sex`.
 
 ```{r}
-ggplot(yrbss_data, aes(x=race4)) + 
+ggplot(yrbss_new, aes(x = race4)) +
   geom_bar() +
   facet_wrap(vars(sex)) +
   theme(axis.text.x = element_text(angle = -45, hjust = 0))
