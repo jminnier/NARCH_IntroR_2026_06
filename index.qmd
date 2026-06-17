@@ -36,13 +36,11 @@ See the [About](about.qmd) page for information about the workshop.
         1.    The "slide" view that will be presented during the workshop ([link](slides_R_narch_2026.qmd){target="_blank"})
         2.    Or, view the slides' content as a webpage ([link](slides_html_R_narch_2026.qmd){target="_blank"})
 
-4.  If you want to post questions outside of the chat (such as to include screenshots), use this [Google Doc](https://docs.google.com/document/d/1oThowPaGP32-iheXAZwJHYgZHgTJRLsQv-zrUkp5KJA/edit?usp=sharing){target="_blank"}.
-
 
 ### Don't have RStudio installed?
 
 -   If you don't have RStudio installed, you can work through the files using Posit Cloud
     -   Create a [free Posit Cloud account](https://posit.cloud/plans/free){target="_blank"}.
-    -   Once you have a Posit account, go to [https://posit.cloud/content/12399962](https://posit.cloud/content/12399962){target="_blank"}.
+    -   Once you have a Posit account, go to [https://posit.cloud/content/12592427](https://posit.cloud/content/12592427){target="_blank"}.
     
     
