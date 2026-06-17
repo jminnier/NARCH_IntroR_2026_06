@@ -69,7 +69,7 @@ For optimized viewing of content, please see the [slides](https://jminnier.githu
     -   Categorical: barplots
 -   Missing data summary
 
-### Part 2: 
+### Part 2:
 
 -   Data wrangling
     -   Sorting data
@@ -216,7 +216,7 @@ class(toy_data$age) # what type is that column?
 ```
 
 -   Other great resources:
-    -   the **cheatsheets** (Help menu > Cheat Sheets, or [posit.co/resources/cheatsheets](https://posit.co/resources/cheatsheets/){target="_blank"})
+    -   the **cheatsheets** (Help menu \> Cheat Sheets, or [posit.co/resources/cheatsheets](https://posit.co/resources/cheatsheets/){target="_blank"})
     -   [*R for Data Science (2e)*](https://r4ds.hadley.nz/){target="_blank"}, a free beginner-friendly book
     -   a search engine: paste the error message in!
 
@@ -226,7 +226,7 @@ class(toy_data$age) # what type is that column?
 -   Two of the most common beginner errors:
 
 | Message | Usually means |
-|---------|---------------|
+|----|----|
 | `object 'x' not found` | A name R doesn't know: a typo, or you haven't created/loaded it yet |
 | `could not find function "..."` | The function's **package isn't loaded**: run `library(thepackage)` |
 
@@ -592,8 +592,7 @@ yrbss_data |>
 
 ## Your turn: summarize
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ### Try it
 
 Using `yrbss_data`:
@@ -613,7 +612,6 @@ yrbss_data |>
   group_by(grade) |>
   get_summary_stats(bmi, stweight, type = "common")
 ```
-
 :::
 
 # Two pipes in R: `|>` vs `%>%`
@@ -964,8 +962,7 @@ ggplot(data = yrbss_data,
 
 ## Your turn: plots
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ### Try it
 
 Using `yrbss_data`:
@@ -984,7 +981,6 @@ ggplot(yrbss_data, aes(x = bmi, y = grade)) +
 ggplot(yrbss_data, aes(x = stweight, y = bmi, color = sex)) +
   geom_point(alpha = .2)
 ```
-
 :::
 
 # Visualizing categorical variables
@@ -1385,8 +1381,7 @@ Which of the AND vs. OR code blocks will return a larger number of participants?
 
 ## Your turn: filter()
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ### Try it
 
 Using `yrbss_data`:
@@ -1405,7 +1400,6 @@ yrbss_data |>
 yrbss_data |>
   filter(grade == "9th" | bmi > 30)
 ```
-
 :::
 
 ## More filter examples
@@ -2042,8 +2036,7 @@ yrbss_new <- yrbss_new |>
 
 ## Your turn: replace_na()
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ### Try it
 
 Using `yrbss_new`:
@@ -2062,7 +2055,6 @@ yrbss_new |>
   select(stweight, stweight_filled) |>
   get_summary_stats(type = "common")
 ```
-
 :::
 
 # More data visualizations with `{ggplot2}`
