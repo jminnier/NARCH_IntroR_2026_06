@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(quarto render *)",
+      "Bash(cd *)",
+      "Bash(Rscript -e 'install.packages\\(c\\(\"gt\",\"gtsummary\",\"rstatix\",\"naniar\",\"writexl\"\\), repos=\"https://cloud.r-project.org\"\\)')",
+      "Read(//Users/minnier/Dropbox/NARCH_IntroR_June2026/**)",
+      "Read(//Users/minnier/Dropbox/NARCH_IntroR_June2026/NARCH_IntroR_2026_06_code/**)",
+      "Bash(perl -0pi -e 's{Jessica Minnier: \\\\*minnier\\\\\\\\\\\\@ohsu\\\\.edu\\\\*\\\\n\\\\nMeike Niederhausen: \\\\*niederha\\\\\\\\\\\\@ohsu\\\\.edu\\\\*}{Jessica Minnier: *minnier\\\\\\\\\\\\@ohsu.edu*\\\\n\\\\n::: {.aside}\\\\nMuch of this course was co-developed with **Meike Niederhausen**, who authored a large portion of these materials.\\\\n:::}g' code_Rintro_narch_2026.qmd)",
+      "Bash(perl -pi -e 's{slides_html_R_berd_2026}{slides_html_R_narch_2026}g; s{slides_R_berd_2026}{slides_R_narch_2026}g' index.qmd code_Rintro_narch_2026.qmd)",
+      "Bash(perl -pi -e 's{slides_html_R_berd_2026}{slides_html_R_narch_2026}g; s{slides_R_berd_2026}{slides_R_narch_2026}g' ../NARCH_IntroR_2026_06_code/code_Rintro_narch_2026.qmd)",
+      "Bash(git config *)",
+      "Bash(echo \"name: $\\(git config user.name\\) | email: $\\(git config user.email\\)\")",
+      "Bash(git add *)",
+      "Bash(git commit -q -m 'Rebrand site to NARCH workshop; add student download zip *)",
+      "Bash(git push *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" https://jminnier.github.io/NARCH_IntroR_2026_06/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" https://jminnier.github.io/NARCH_IntroR_2026_06/about.html)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" https://jminnier.github.io/NARCH_IntroR_2026_06/slides_R_narch_2026.html)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} size=%{size_download}\\\\n\" -L https://jminnier.github.io/NARCH_IntroR_2026_06/R_code_Intro_NARCH_2026_06.zip)"
+    ]
+  }
+}
