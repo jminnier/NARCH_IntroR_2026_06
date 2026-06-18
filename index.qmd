@@ -21,8 +21,10 @@ See the [About](about.qmd) page for information about the workshop.
 
 ## Open files for today's workshop
 
-1.  Download a **zipped folder** of workshop files ([link](https://jessicaminnier.com/NARCH_IntroR_2026_06/R_code_Intro_NARCH_2026_06.zip){target="_blank"})
-    -   Clicking the [link](https://jessicaminnier.com/NARCH_IntroR_2026_06/R_code_Intro_NARCH_2026_06.zip){target="_blank"} will automatically download the `.zip` file to your computer (depending on your browser).
+1.  Download a **zipped folder** of workshop files ([link](https://github.com/jminnier/NARCH_IntroR_2026_06/blob/main/docs/NARCH_IntroR_2026_06_code.zip){target="_blank"})
+    -   Clicking the [link](https://github.com/jminnier/NARCH_IntroR_2026_06/blob/main/docs/NARCH_IntroR_2026_06_code.zip){target="_blank"} will take you to a github page
+        -   To the right, select the Download raw file option and save the file to your computer.
+
     -   Extract zipped file
         -   **Do you have a PC? Need to right click the  .zip file and select EXTRACT ALL**
         -   Do you have a Mac? Just double click the .zip file and it will extract the files automatically.
